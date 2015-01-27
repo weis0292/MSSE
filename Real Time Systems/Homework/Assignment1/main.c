@@ -19,29 +19,45 @@ void ClearAll()
 
 int main()
 {
-	ClearAll();
+	const long blink_ms = 250;
+	unsigned long ticks_top = 0;
+	unsigned long ticks_bottom = 0;
 
 	while(1)
 	{
-		unsigned char button = wait_for_button_press(ANY_BUTTON);
-		if(button == TOP_BUTTON)
+		unsigned char pressed_state = button_is_pressed(ANY_BUTTON);
+		// The middle button will count as both the top and the bottom button (fun!)
+		unsigned char pressed_state_top = pressed_state & (TOP_BUTTON | MIDDLE_BUTTON);
+		unsigned char pressed_state_bottom = pressed_state & (BOTTOM_BUTTON | MIDDLE_BUTTON);
+
+		// Deal with the top button and the green LED
+		if(pressed_state_top)
 		{
-			green_led(HIGH);
-			print("Top Button");
+			if(((ticks_to_microseconds(get_ticks() - ticks_top) / 1000) >= blink_ms) || (ticks_top == 0))
+			{
+				green_led(TOGGLE);
+				ticks_top = get_ticks();
+			}
 		}
-		else if(button == MIDDLE_BUTTON)
+		else
 		{
-			green_led(HIGH);
-			red_led(HIGH);
-			print("Middle Button");
+			green_led(LOW);
+			ticks_top = 0;
 		}
-		else if(button == BOTTOM_BUTTON)
+
+		// Deal with the bottom button and the red LED
+		if(pressed_state_bottom)
 		{
-			red_led(HIGH);
-			print("Bottom Button");
+			if(((ticks_to_microseconds(get_ticks() - ticks_bottom) / 1000) >= blink_ms) || (ticks_bottom == 0))
+			{
+				red_led(TOGGLE);
+				ticks_bottom = get_ticks();
+			}
 		}
-		
-		wait_for_button_release(button);
-		ClearAll();
+		else
+		{
+			red_led(LOW);
+			ticks_bottom = 0;
+		}
 	}
 }
