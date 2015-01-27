@@ -12,7 +12,9 @@
 
 int main()
 {
+	// The time an LED will stay at a given state when the button is pressed
 	const long blink_ms = 250;
+	// The amount of time the button has been held since the last LED toggle
 	unsigned long ticks_top = 0;
 	unsigned long ticks_bottom = 0;
 
