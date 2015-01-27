@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000030  00000000  00000000  00002ade  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000042a  00000000  00000000  00002b0e  2**0
+  6 .debug_info   00000460  00000000  00000000  00002b0e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000230  00000000  00000000  00002f38  2**0
+  7 .debug_abbrev 0000022e  00000000  00000000  00002f6e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000003fb  00000000  00000000  00003168  2**0
+  8 .debug_line   000003fd  00000000  00000000  0000319c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000044  00000000  00000000  00003564  2**2
+  9 .debug_frame  00000044  00000000  00000000  0000359c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000286  00000000  00000000  000035a8  2**0
+ 10 .debug_str    00000296  00000000  00000000  000035e0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000002bb  00000000  00000000  0000382e  2**0
+ 11 .debug_loc    000002f9  00000000  00000000  00003876  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000020  00000000  00000000  00003ae9  2**0
+ 12 .debug_ranges 00000020  00000000  00000000  00003b6f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -361,13 +361,14 @@ int main()
 		if(pressed_state_top)
  188:	d9 f0       	breq	.+54     	; 0x1c0 <main+0x50>
 		{
-			if(((ticks_to_microseconds(get_ticks() - ticks_top) / 1000) >= blink_ms) || (ticks_top == 0))
+			unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - ticks_top)) / 1000;
  18a:	0e 94 df 01 	call	0x3be	; 0x3be <get_ticks>
  18e:	68 19       	sub	r22, r8
  190:	79 09       	sbc	r23, r9
  192:	8a 09       	sbc	r24, r10
  194:	9b 09       	sbc	r25, r11
  196:	0e 94 74 01 	call	0x2e8	; 0x2e8 <ticks_to_microseconds>
+			if((elapsed_time_ms >= blink_ms) || (ticks_top == 0))
  19a:	60 39       	cpi	r22, 0x90	; 144
  19c:	70 4d       	sbci	r23, 0xD0	; 208
  19e:	83 40       	sbci	r24, 0x03	; 3
@@ -413,13 +414,14 @@ static inline void green_led(unsigned char on)
  1ce:	cc 23       	and	r28, r28
  1d0:	d9 f0       	breq	.+54     	; 0x208 <main+0x98>
 		{
-			if(((ticks_to_microseconds(get_ticks() - ticks_bottom) / 1000) >= blink_ms) || (ticks_bottom == 0))
+			unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - ticks_bottom)) / 1000;
  1d2:	0e 94 df 01 	call	0x3be	; 0x3be <get_ticks>
  1d6:	6c 19       	sub	r22, r12
  1d8:	7d 09       	sbc	r23, r13
  1da:	8e 09       	sbc	r24, r14
  1dc:	9f 09       	sbc	r25, r15
  1de:	0e 94 74 01 	call	0x2e8	; 0x2e8 <ticks_to_microseconds>
+			if((elapsed_time_ms >= blink_ms) || (ticks_bottom == 0))
  1e2:	60 39       	cpi	r22, 0x90	; 144
  1e4:	70 4d       	sbci	r23, 0xD0	; 208
  1e6:	83 40       	sbci	r24, 0x03	; 3

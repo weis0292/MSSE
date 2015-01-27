@@ -31,7 +31,8 @@ int main()
 		// Deal with the top button and the green LED
 		if(pressed_state_top)
 		{
-			if(((ticks_to_microseconds(get_ticks() - ticks_top) / 1000) >= blink_ms) || (ticks_top == 0))
+			unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - ticks_top)) / 1000;
+			if((elapsed_time_ms >= blink_ms) || (ticks_top == 0))
 			{
 				green_led(TOGGLE);
 				ticks_top = get_ticks();
@@ -46,7 +47,8 @@ int main()
 		// Deal with the bottom button and the red LED
 		if(pressed_state_bottom)
 		{
-			if(((ticks_to_microseconds(get_ticks() - ticks_bottom) / 1000) >= blink_ms) || (ticks_bottom == 0))
+			unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - ticks_bottom)) / 1000;
+			if((elapsed_time_ms >= blink_ms) || (ticks_bottom == 0))
 			{
 				red_led(TOGGLE);
 				ticks_bottom = get_ticks();
