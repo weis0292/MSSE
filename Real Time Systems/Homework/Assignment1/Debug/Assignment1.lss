@@ -1,0 +1,927 @@
+
+Assignment1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000002a  00800100  0000060e  000006a2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000060e  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000021  0080012a  0080012a  000006cc  2**0
+                  ALLOC
+  3 .stab         00001b18  00000000  00000000  000006cc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00003013  00000000  00000000  000021e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      00000030  00000000  00000000  000051f7  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 00000038  00000000  00000000  00005227  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_info   00000461  00000000  00000000  0000525f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 0000024b  00000000  00000000  000056c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   000003ff  00000000  00000000  0000590b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_frame  00000054  00000000  00000000  00005d0c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_str    00000249  00000000  00000000  00005d60  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc    00000282  00000000  00000000  00005fa9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000028  00000000  00000000  0000622b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 46 00 	jmp	0x8c	; 0x8c <__ctors_end>
+   4:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+   8:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+   c:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  10:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  14:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  18:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  1c:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  20:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  24:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  28:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  2c:	0c 94 83 02 	jmp	0x506	; 0x506 <__vector_11>
+  30:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  34:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  38:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  3c:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  40:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  44:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  48:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  4c:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  50:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  54:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  58:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  5c:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  60:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  64:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  68:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  6c:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  70:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  74:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  78:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  7c:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  80:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  84:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+  88:	0c 94 65 00 	jmp	0xca	; 0xca <__bad_interrupt>
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e4       	ldi	r29, 0x40	; 64
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_copy_data>:
+  98:	11 e0       	ldi	r17, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	ee e0       	ldi	r30, 0x0E	; 14
+  a0:	f6 e0       	ldi	r31, 0x06	; 6
+  a2:	00 e0       	ldi	r16, 0x00	; 0
+  a4:	0b bf       	out	0x3b, r16	; 59
+  a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
+  a8:	07 90       	elpm	r0, Z+
+  aa:	0d 92       	st	X+, r0
+  ac:	aa 32       	cpi	r26, 0x2A	; 42
+  ae:	b1 07       	cpc	r27, r17
+  b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
+
+000000b2 <__do_clear_bss>:
+  b2:	21 e0       	ldi	r18, 0x01	; 1
+  b4:	aa e2       	ldi	r26, 0x2A	; 42
+  b6:	b1 e0       	ldi	r27, 0x01	; 1
+  b8:	01 c0       	rjmp	.+2      	; 0xbc <.do_clear_bss_start>
+
+000000ba <.do_clear_bss_loop>:
+  ba:	1d 92       	st	X+, r1
+
+000000bc <.do_clear_bss_start>:
+  bc:	ab 34       	cpi	r26, 0x4B	; 75
+  be:	b2 07       	cpc	r27, r18
+  c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
+  c2:	0e 94 c2 00 	call	0x184	; 0x184 <main>
+  c6:	0c 94 05 03 	jmp	0x60a	; 0x60a <_exit>
+
+000000ca <__bad_interrupt>:
+  ca:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000ce <set_digital_output>:
+	io->pinRegister = 0;
+	io->portRegister = 0;
+	io->ddrRegister = 0;
+	io->bitmask = 0;
+
+	if (pin < 8)			// pin 0 = PD0, ..., 7 = PD7
+  ce:	88 30       	cpi	r24, 0x08	; 8
+  d0:	58 f4       	brcc	.+22     	; 0xe8 <set_digital_output+0x1a>
+	{
+		io->pinRegister = (unsigned char*)&PIND;
+		io->portRegister = (unsigned char*)&PORTD;
+		io->ddrRegister = (unsigned char*)&DDRD;
+		io->bitmask = 1 << pin;
+  d2:	91 e0       	ldi	r25, 0x01	; 1
+  d4:	01 c0       	rjmp	.+2      	; 0xd8 <set_digital_output+0xa>
+  d6:	99 0f       	add	r25, r25
+  d8:	8a 95       	dec	r24
+  da:	ea f7       	brpl	.-6      	; 0xd6 <set_digital_output+0x8>
+  dc:	89 2f       	mov	r24, r25
+
+	if (pin < 8)			// pin 0 = PD0, ..., 7 = PD7
+	{
+		io->pinRegister = (unsigned char*)&PIND;
+		io->portRegister = (unsigned char*)&PORTD;
+		io->ddrRegister = (unsigned char*)&DDRD;
+  de:	aa e2       	ldi	r26, 0x2A	; 42
+  e0:	b0 e0       	ldi	r27, 0x00	; 0
+	io->bitmask = 0;
+
+	if (pin < 8)			// pin 0 = PD0, ..., 7 = PD7
+	{
+		io->pinRegister = (unsigned char*)&PIND;
+		io->portRegister = (unsigned char*)&PORTD;
+  e2:	eb e2       	ldi	r30, 0x2B	; 43
+  e4:	f0 e0       	ldi	r31, 0x00	; 0
+  e6:	31 c0       	rjmp	.+98     	; 0x14a <set_digital_output+0x7c>
+		io->ddrRegister = (unsigned char*)&DDRD;
+		io->bitmask = 1 << pin;
+	}
+
+#if defined(_ORANGUTAN_SVP) || defined(_ORANGUTAN_X2)
+	else if (pin < 16)		// pin 8 = PB0, ..., 15 = PB7
+  e8:	80 31       	cpi	r24, 0x10	; 16
+  ea:	60 f4       	brcc	.+24     	; 0x104 <set_digital_output+0x36>
+	{
+		io->pinRegister = (unsigned char*)&PINB;
+		io->portRegister = (unsigned char*)&PORTB;
+		io->ddrRegister = (unsigned char*)&DDRB;
+		io->bitmask = 1 << (pin - 8);
+  ec:	98 ef       	ldi	r25, 0xF8	; 248
+  ee:	98 0f       	add	r25, r24
+  f0:	81 e0       	ldi	r24, 0x01	; 1
+  f2:	01 c0       	rjmp	.+2      	; 0xf6 <set_digital_output+0x28>
+  f4:	88 0f       	add	r24, r24
+  f6:	9a 95       	dec	r25
+  f8:	ea f7       	brpl	.-6      	; 0xf4 <set_digital_output+0x26>
+#if defined(_ORANGUTAN_SVP) || defined(_ORANGUTAN_X2)
+	else if (pin < 16)		// pin 8 = PB0, ..., 15 = PB7
+	{
+		io->pinRegister = (unsigned char*)&PINB;
+		io->portRegister = (unsigned char*)&PORTB;
+		io->ddrRegister = (unsigned char*)&DDRB;
+  fa:	a4 e2       	ldi	r26, 0x24	; 36
+  fc:	b0 e0       	ldi	r27, 0x00	; 0
+
+#if defined(_ORANGUTAN_SVP) || defined(_ORANGUTAN_X2)
+	else if (pin < 16)		// pin 8 = PB0, ..., 15 = PB7
+	{
+		io->pinRegister = (unsigned char*)&PINB;
+		io->portRegister = (unsigned char*)&PORTB;
+  fe:	e5 e2       	ldi	r30, 0x25	; 37
+ 100:	f0 e0       	ldi	r31, 0x00	; 0
+ 102:	23 c0       	rjmp	.+70     	; 0x14a <set_digital_output+0x7c>
+		io->ddrRegister = (unsigned char*)&DDRB;
+		io->bitmask = 1 << (pin - 8);
+	}
+	else if (pin < 24)		// pin 16 = PC0, ..., 23 = PC7
+ 104:	88 31       	cpi	r24, 0x18	; 24
+ 106:	60 f4       	brcc	.+24     	; 0x120 <set_digital_output+0x52>
+	{
+		io->pinRegister = (unsigned char*)&PINC;
+		io->portRegister = (unsigned char*)&PORTC;
+		io->ddrRegister = (unsigned char*)&DDRC;
+		io->bitmask = 1 << (pin - 16);
+ 108:	90 ef       	ldi	r25, 0xF0	; 240
+ 10a:	98 0f       	add	r25, r24
+ 10c:	81 e0       	ldi	r24, 0x01	; 1
+ 10e:	01 c0       	rjmp	.+2      	; 0x112 <set_digital_output+0x44>
+ 110:	88 0f       	add	r24, r24
+ 112:	9a 95       	dec	r25
+ 114:	ea f7       	brpl	.-6      	; 0x110 <set_digital_output+0x42>
+	}
+	else if (pin < 24)		// pin 16 = PC0, ..., 23 = PC7
+	{
+		io->pinRegister = (unsigned char*)&PINC;
+		io->portRegister = (unsigned char*)&PORTC;
+		io->ddrRegister = (unsigned char*)&DDRC;
+ 116:	a7 e2       	ldi	r26, 0x27	; 39
+ 118:	b0 e0       	ldi	r27, 0x00	; 0
+		io->bitmask = 1 << (pin - 8);
+	}
+	else if (pin < 24)		// pin 16 = PC0, ..., 23 = PC7
+	{
+		io->pinRegister = (unsigned char*)&PINC;
+		io->portRegister = (unsigned char*)&PORTC;
+ 11a:	e8 e2       	ldi	r30, 0x28	; 40
+ 11c:	f0 e0       	ldi	r31, 0x00	; 0
+ 11e:	15 c0       	rjmp	.+42     	; 0x14a <set_digital_output+0x7c>
+		io->ddrRegister = (unsigned char*)&DDRC;
+		io->bitmask = 1 << (pin - 16);
+	}
+	else if (pin < 32)		// pin 24 = PA7, ..., 31 = PA0
+ 120:	80 32       	cpi	r24, 0x20	; 32
+ 122:	70 f4       	brcc	.+28     	; 0x140 <set_digital_output+0x72>
+	{
+		io->pinRegister = (unsigned char*)&PINA;
+		io->portRegister = (unsigned char*)&PORTA;
+		io->ddrRegister = (unsigned char*)&DDRA;
+		io->bitmask = 1 << (31 - pin);
+ 124:	2f e1       	ldi	r18, 0x1F	; 31
+ 126:	30 e0       	ldi	r19, 0x00	; 0
+ 128:	28 1b       	sub	r18, r24
+ 12a:	31 09       	sbc	r19, r1
+ 12c:	81 e0       	ldi	r24, 0x01	; 1
+ 12e:	01 c0       	rjmp	.+2      	; 0x132 <set_digital_output+0x64>
+ 130:	88 0f       	add	r24, r24
+ 132:	2a 95       	dec	r18
+ 134:	ea f7       	brpl	.-6      	; 0x130 <set_digital_output+0x62>
+	}
+	else if (pin < 32)		// pin 24 = PA7, ..., 31 = PA0
+	{
+		io->pinRegister = (unsigned char*)&PINA;
+		io->portRegister = (unsigned char*)&PORTA;
+		io->ddrRegister = (unsigned char*)&DDRA;
+ 136:	a1 e2       	ldi	r26, 0x21	; 33
+ 138:	b0 e0       	ldi	r27, 0x00	; 0
+		io->bitmask = 1 << (pin - 16);
+	}
+	else if (pin < 32)		// pin 24 = PA7, ..., 31 = PA0
+	{
+		io->pinRegister = (unsigned char*)&PINA;
+		io->portRegister = (unsigned char*)&PORTA;
+ 13a:	e2 e2       	ldi	r30, 0x22	; 34
+ 13c:	f0 e0       	ldi	r31, 0x00	; 0
+ 13e:	05 c0       	rjmp	.+10     	; 0x14a <set_digital_output+0x7c>
+static inline void get_io_registers(struct IOStruct* io, unsigned char pin)
+{
+	io->pinRegister = 0;
+	io->portRegister = 0;
+	io->ddrRegister = 0;
+	io->bitmask = 0;
+ 140:	80 e0       	ldi	r24, 0x00	; 0
+// 1 in the position of the specified pin and 0s everywhere else.
+static inline void get_io_registers(struct IOStruct* io, unsigned char pin)
+{
+	io->pinRegister = 0;
+	io->portRegister = 0;
+	io->ddrRegister = 0;
+ 142:	a0 e0       	ldi	r26, 0x00	; 0
+ 144:	b0 e0       	ldi	r27, 0x00	; 0
+// with the specified pin (DDR, PORT, and PIN) along with a bitmask with a
+// 1 in the position of the specified pin and 0s everywhere else.
+static inline void get_io_registers(struct IOStruct* io, unsigned char pin)
+{
+	io->pinRegister = 0;
+	io->portRegister = 0;
+ 146:	e0 e0       	ldi	r30, 0x00	; 0
+ 148:	f0 e0       	ldi	r31, 0x00	; 0
+// setting it as high-impedance (val = 0) or enabling the internal pull-up (val = 1).  If the pin is an
+// output, this lets you choose between driving low (val = 0) and driving high (val = 1).
+// NOTE: if val is 0xFF (255), this method will toggle the PORT register pin(s).
+static inline void set_digital_output_value(struct IOStruct* ioPin, unsigned char val)
+{
+	if (val == 0xFF)
+ 14a:	6f 3f       	cpi	r22, 0xFF	; 255
+ 14c:	19 f4       	brne	.+6      	; 0x154 <set_digital_output+0x86>
+		*(ioPin->portRegister) ^= ioPin->bitmask;
+ 14e:	90 81       	ld	r25, Z
+ 150:	98 27       	eor	r25, r24
+ 152:	09 c0       	rjmp	.+18     	; 0x166 <set_digital_output+0x98>
+	else if (val)
+ 154:	66 23       	and	r22, r22
+ 156:	19 f0       	breq	.+6      	; 0x15e <set_digital_output+0x90>
+		*(ioPin->portRegister) |= ioPin->bitmask;
+ 158:	90 81       	ld	r25, Z
+ 15a:	98 2b       	or	r25, r24
+ 15c:	04 c0       	rjmp	.+8      	; 0x166 <set_digital_output+0x98>
+	else
+		*(ioPin->portRegister) &= ~ioPin->bitmask;
+ 15e:	20 81       	ld	r18, Z
+ 160:	98 2f       	mov	r25, r24
+ 162:	90 95       	com	r25
+ 164:	92 23       	and	r25, r18
+ 166:	90 83       	st	Z, r25
+// low-level method for setting the data direction (i.e. input or output) of an pin or set of pins
+// described by an IOStruct pointer.
+static inline void set_data_direction(struct IOStruct* ioPin, unsigned char val)
+{
+	if (val)
+		*(ioPin->ddrRegister) |= ioPin->bitmask;
+ 168:	9c 91       	ld	r25, X
+ 16a:	98 2b       	or	r25, r24
+ 16c:	9c 93       	st	X, r25
+ 16e:	08 95       	ret
+
+00000170 <ClearAll>:
+	#endif
+}
+	
+static inline void green_led(unsigned char on)
+{
+	set_digital_output(GREEN_LED, on);
+ 170:	60 e0       	ldi	r22, 0x00	; 0
+ 172:	84 e1       	ldi	r24, 0x14	; 20
+ 174:	0e 94 67 00 	call	0xce	; 0xce <set_digital_output>
+{
+	#if defined (_ORANGUTAN_SVP)	// red LED turns on when driven low
+	if (on == TOGGLE)
+		set_digital_output(RED_LED, TOGGLE);
+	else if (on == LOW)
+		set_digital_output(RED_LED, HIGH);
+ 178:	61 e0       	ldi	r22, 0x01	; 1
+ 17a:	81 e0       	ldi	r24, 0x01	; 1
+ 17c:	0e 94 67 00 	call	0xce	; 0xce <set_digital_output>
+
+void ClearAll()
+{
+	green_led(LOW);
+	red_led(LOW);
+	clear();
+ 180:	0c 94 0a 02 	jmp	0x414	; 0x414 <clear>
+
+00000184 <main>:
+}
+
+int main()
+{
+	ClearAll();
+ 184:	0e 94 b8 00 	call	0x170	; 0x170 <ClearAll>
+
+	while(1)
+	{
+		unsigned char button = wait_for_button_press(ANY_BUTTON);
+ 188:	8c e2       	ldi	r24, 0x2C	; 44
+ 18a:	0e 94 63 02 	call	0x4c6	; 0x4c6 <wait_for_button_press>
+ 18e:	c8 2f       	mov	r28, r24
+		if(button == TOP_BUTTON)
+ 190:	80 32       	cpi	r24, 0x20	; 32
+ 192:	39 f4       	brne	.+14     	; 0x1a2 <main+0x1e>
+	#endif
+}
+	
+static inline void green_led(unsigned char on)
+{
+	set_digital_output(GREEN_LED, on);
+ 194:	61 e0       	ldi	r22, 0x01	; 1
+ 196:	84 e1       	ldi	r24, 0x14	; 20
+ 198:	0e 94 67 00 	call	0xce	; 0xce <set_digital_output>
+		{
+			green_led(HIGH);
+			print("Top Button");
+ 19c:	82 e0       	ldi	r24, 0x02	; 2
+ 19e:	91 e0       	ldi	r25, 0x01	; 1
+ 1a0:	15 c0       	rjmp	.+42     	; 0x1cc <main+0x48>
+		}
+		else if(button == MIDDLE_BUTTON)
+ 1a2:	88 30       	cpi	r24, 0x08	; 8
+ 1a4:	59 f4       	brne	.+22     	; 0x1bc <main+0x38>
+ 1a6:	61 e0       	ldi	r22, 0x01	; 1
+ 1a8:	84 e1       	ldi	r24, 0x14	; 20
+ 1aa:	0e 94 67 00 	call	0xce	; 0xce <set_digital_output>
+	if (on == TOGGLE)
+		set_digital_output(RED_LED, TOGGLE);
+	else if (on == LOW)
+		set_digital_output(RED_LED, HIGH);
+	else
+		set_digital_output(RED_LED, LOW);
+ 1ae:	60 e0       	ldi	r22, 0x00	; 0
+ 1b0:	81 e0       	ldi	r24, 0x01	; 1
+ 1b2:	0e 94 67 00 	call	0xce	; 0xce <set_digital_output>
+		{
+			green_led(HIGH);
+			red_led(HIGH);
+			print("Middle Button");
+ 1b6:	8d e0       	ldi	r24, 0x0D	; 13
+ 1b8:	91 e0       	ldi	r25, 0x01	; 1
+ 1ba:	08 c0       	rjmp	.+16     	; 0x1cc <main+0x48>
+		}
+		else if(button == BOTTOM_BUTTON)
+ 1bc:	84 30       	cpi	r24, 0x04	; 4
+ 1be:	41 f4       	brne	.+16     	; 0x1d0 <main+0x4c>
+ 1c0:	60 e0       	ldi	r22, 0x00	; 0
+ 1c2:	81 e0       	ldi	r24, 0x01	; 1
+ 1c4:	0e 94 67 00 	call	0xce	; 0xce <set_digital_output>
+		{
+			red_led(HIGH);
+			print("Bottom Button");
+ 1c8:	8b e1       	ldi	r24, 0x1B	; 27
+ 1ca:	91 e0       	ldi	r25, 0x01	; 1
+ 1cc:	0e 94 21 02 	call	0x442	; 0x442 <print>
+		}
+		
+		wait_for_button_release(button);
+ 1d0:	8c 2f       	mov	r24, r28
+ 1d2:	0e 94 78 02 	call	0x4f0	; 0x4f0 <wait_for_button_release>
+ 1d6:	d6 cf       	rjmp	.-84     	; 0x184 <main>
+
+000001d8 <delayMicroseconds.clone.0>:
+ 1d8:	81 e0       	ldi	r24, 0x01	; 1
+ 1da:	90 e0       	ldi	r25, 0x00	; 0
+ 1dc:	6f 93       	push	r22
+ 1de:	64 e0       	ldi	r22, 0x04	; 4
+ 1e0:	6a 95       	dec	r22
+ 1e2:	f1 f7       	brne	.-4      	; 0x1e0 <delayMicroseconds.clone.0+0x8>
+ 1e4:	6f 91       	pop	r22
+ 1e6:	01 97       	sbiw	r24, 0x01	; 1
+ 1e8:	c9 f7       	brne	.-14     	; 0x1dc <delayMicroseconds.clone.0+0x4>
+ 1ea:	08 95       	ret
+
+000001ec <_ZN12OrangutanLCD8busyWaitEv>:
+ 1ec:	0f 93       	push	r16
+ 1ee:	1f 93       	push	r17
+ 1f0:	cf 93       	push	r28
+ 1f2:	df 93       	push	r29
+ 1f4:	17 b1       	in	r17, 0x07	; 7
+ 1f6:	3d 98       	cbi	0x07, 5	; 7
+ 1f8:	28 98       	cbi	0x05, 0	; 5
+ 1fa:	29 9a       	sbi	0x05, 1	; 5
+ 1fc:	c0 e0       	ldi	r28, 0x00	; 0
+ 1fe:	d0 e0       	ldi	r29, 0x00	; 0
+ 200:	0e 94 ec 00 	call	0x1d8	; 0x1d8 <delayMicroseconds.clone.0>
+ 204:	2a 9a       	sbi	0x05, 2	; 5
+ 206:	0e 94 ec 00 	call	0x1d8	; 0x1d8 <delayMicroseconds.clone.0>
+ 20a:	06 b1       	in	r16, 0x06	; 6
+ 20c:	2a 98       	cbi	0x05, 2	; 5
+ 20e:	0e 94 ec 00 	call	0x1d8	; 0x1d8 <delayMicroseconds.clone.0>
+ 212:	2a 9a       	sbi	0x05, 2	; 5
+ 214:	0e 94 ec 00 	call	0x1d8	; 0x1d8 <delayMicroseconds.clone.0>
+ 218:	2a 98       	cbi	0x05, 2	; 5
+ 21a:	24 96       	adiw	r28, 0x04	; 4
+ 21c:	05 ff       	sbrs	r16, 5
+ 21e:	10 c0       	rjmp	.+32     	; 0x240 <_ZN12OrangutanLCD8busyWaitEv+0x54>
+ 220:	9e 01       	movw	r18, r28
+ 222:	40 e0       	ldi	r20, 0x00	; 0
+ 224:	50 e0       	ldi	r21, 0x00	; 0
+ 226:	80 91 2e 01 	lds	r24, 0x012E
+ 22a:	90 91 2f 01 	lds	r25, 0x012F
+ 22e:	a0 91 30 01 	lds	r26, 0x0130
+ 232:	b0 91 31 01 	lds	r27, 0x0131
+ 236:	28 17       	cp	r18, r24
+ 238:	39 07       	cpc	r19, r25
+ 23a:	4a 07       	cpc	r20, r26
+ 23c:	5b 07       	cpc	r21, r27
+ 23e:	00 f3       	brcs	.-64     	; 0x200 <_ZN12OrangutanLCD8busyWaitEv+0x14>
+ 240:	9e 01       	movw	r18, r28
+ 242:	40 e0       	ldi	r20, 0x00	; 0
+ 244:	50 e0       	ldi	r21, 0x00	; 0
+ 246:	80 91 2e 01 	lds	r24, 0x012E
+ 24a:	90 91 2f 01 	lds	r25, 0x012F
+ 24e:	a0 91 30 01 	lds	r26, 0x0130
+ 252:	b0 91 31 01 	lds	r27, 0x0131
+ 256:	28 17       	cp	r18, r24
+ 258:	39 07       	cpc	r19, r25
+ 25a:	4a 07       	cpc	r20, r26
+ 25c:	5b 07       	cpc	r21, r27
+ 25e:	28 f0       	brcs	.+10     	; 0x26a <_ZN12OrangutanLCD8busyWaitEv+0x7e>
+ 260:	82 e3       	ldi	r24, 0x32	; 50
+ 262:	90 e0       	ldi	r25, 0x00	; 0
+ 264:	a0 e0       	ldi	r26, 0x00	; 0
+ 266:	b0 e0       	ldi	r27, 0x00	; 0
+ 268:	04 c0       	rjmp	.+8      	; 0x272 <_ZN12OrangutanLCD8busyWaitEv+0x86>
+ 26a:	80 e3       	ldi	r24, 0x30	; 48
+ 26c:	95 e7       	ldi	r25, 0x75	; 117
+ 26e:	a0 e0       	ldi	r26, 0x00	; 0
+ 270:	b0 e0       	ldi	r27, 0x00	; 0
+ 272:	80 93 2e 01 	sts	0x012E, r24
+ 276:	90 93 2f 01 	sts	0x012F, r25
+ 27a:	a0 93 30 01 	sts	0x0130, r26
+ 27e:	b0 93 31 01 	sts	0x0131, r27
+ 282:	17 b9       	out	0x07, r17	; 7
+ 284:	df 91       	pop	r29
+ 286:	cf 91       	pop	r28
+ 288:	1f 91       	pop	r17
+ 28a:	0f 91       	pop	r16
+ 28c:	08 95       	ret
+
+0000028e <_ZN12OrangutanLCD8sendDataEh>:
+ 28e:	28 b1       	in	r18, 0x08	; 8
+ 290:	90 e0       	ldi	r25, 0x00	; 0
+ 292:	8f 70       	andi	r24, 0x0F	; 15
+ 294:	90 70       	andi	r25, 0x00	; 0
+ 296:	88 0f       	add	r24, r24
+ 298:	99 1f       	adc	r25, r25
+ 29a:	88 0f       	add	r24, r24
+ 29c:	99 1f       	adc	r25, r25
+ 29e:	23 7c       	andi	r18, 0xC3	; 195
+ 2a0:	28 2b       	or	r18, r24
+ 2a2:	28 b9       	out	0x08, r18	; 8
+ 2a4:	2a 9a       	sbi	0x05, 2	; 5
+ 2a6:	0e 94 ec 00 	call	0x1d8	; 0x1d8 <delayMicroseconds.clone.0>
+ 2aa:	2a 98       	cbi	0x05, 2	; 5
+ 2ac:	0e 94 ec 00 	call	0x1d8	; 0x1d8 <delayMicroseconds.clone.0>
+ 2b0:	08 95       	ret
+
+000002b2 <_ZN12OrangutanLCD4sendEhhh>:
+ 2b2:	a2 e0       	ldi	r26, 0x02	; 2
+ 2b4:	b0 e0       	ldi	r27, 0x00	; 0
+ 2b6:	ef e5       	ldi	r30, 0x5F	; 95
+ 2b8:	f1 e0       	ldi	r31, 0x01	; 1
+ 2ba:	0c 94 db 02 	jmp	0x5b6	; 0x5b6 <__prologue_saves__+0x1a>
+ 2be:	18 2f       	mov	r17, r24
+ 2c0:	4a 83       	std	Y+2, r20	; 0x02
+ 2c2:	69 83       	std	Y+1, r22	; 0x01
+ 2c4:	0e 94 d4 01 	call	0x3a8	; 0x3a8 <_ZN12OrangutanLCD4initEv>
+ 2c8:	0e 94 f6 00 	call	0x1ec	; 0x1ec <_ZN12OrangutanLCD8busyWaitEv>
+ 2cc:	f7 b0       	in	r15, 0x07	; 7
+ 2ce:	08 b1       	in	r16, 0x08	; 8
+ 2d0:	29 98       	cbi	0x05, 1	; 5
+ 2d2:	69 81       	ldd	r22, Y+1	; 0x01
+ 2d4:	4a 81       	ldd	r20, Y+2	; 0x02
+ 2d6:	66 23       	and	r22, r22
+ 2d8:	11 f0       	breq	.+4      	; 0x2de <_ZN12OrangutanLCD4sendEhhh+0x2c>
+ 2da:	28 9a       	sbi	0x05, 0	; 5
+ 2dc:	01 c0       	rjmp	.+2      	; 0x2e0 <_ZN12OrangutanLCD4sendEhhh+0x2e>
+ 2de:	28 98       	cbi	0x05, 0	; 5
+ 2e0:	87 b1       	in	r24, 0x07	; 7
+ 2e2:	8c 63       	ori	r24, 0x3C	; 60
+ 2e4:	87 b9       	out	0x07, r24	; 7
+ 2e6:	41 30       	cpi	r20, 0x01	; 1
+ 2e8:	29 f0       	breq	.+10     	; 0x2f4 <_ZN12OrangutanLCD4sendEhhh+0x42>
+ 2ea:	81 2f       	mov	r24, r17
+ 2ec:	82 95       	swap	r24
+ 2ee:	8f 70       	andi	r24, 0x0F	; 15
+ 2f0:	0e 94 47 01 	call	0x28e	; 0x28e <_ZN12OrangutanLCD8sendDataEh>
+ 2f4:	81 2f       	mov	r24, r17
+ 2f6:	8f 70       	andi	r24, 0x0F	; 15
+ 2f8:	0e 94 47 01 	call	0x28e	; 0x28e <_ZN12OrangutanLCD8sendDataEh>
+ 2fc:	f7 b8       	out	0x07, r15	; 7
+ 2fe:	08 b9       	out	0x08, r16	; 8
+ 300:	22 96       	adiw	r28, 0x02	; 2
+ 302:	e5 e0       	ldi	r30, 0x05	; 5
+ 304:	0c 94 f7 02 	jmp	0x5ee	; 0x5ee <__epilogue_restores__+0x1a>
+
+00000308 <_ZN12OrangutanLCD8send_cmdEh>:
+ 308:	60 e0       	ldi	r22, 0x00	; 0
+ 30a:	42 e0       	ldi	r20, 0x02	; 2
+ 30c:	0e 94 59 01 	call	0x2b2	; 0x2b2 <_ZN12OrangutanLCD4sendEhhh>
+ 310:	08 95       	ret
+
+00000312 <_ZN12OrangutanLCD9send_dataEh>:
+ 312:	61 e0       	ldi	r22, 0x01	; 1
+ 314:	42 e0       	ldi	r20, 0x02	; 2
+ 316:	0e 94 59 01 	call	0x2b2	; 0x2b2 <_ZN12OrangutanLCD4sendEhhh>
+ 31a:	08 95       	ret
+
+0000031c <_ZN12OrangutanLCD13send_4bit_cmdEh>:
+ 31c:	60 e0       	ldi	r22, 0x00	; 0
+ 31e:	41 e0       	ldi	r20, 0x01	; 1
+ 320:	0e 94 59 01 	call	0x2b2	; 0x2b2 <_ZN12OrangutanLCD4sendEhhh>
+ 324:	08 95       	ret
+
+00000326 <_ZN12OrangutanLCD5init2Ev>:
+ 326:	3d 98       	cbi	0x07, 5	; 7
+ 328:	45 9a       	sbi	0x08, 5	; 8
+ 32a:	80 e3       	ldi	r24, 0x30	; 48
+ 32c:	95 e7       	ldi	r25, 0x75	; 117
+ 32e:	a0 e0       	ldi	r26, 0x00	; 0
+ 330:	b0 e0       	ldi	r27, 0x00	; 0
+ 332:	80 93 2e 01 	sts	0x012E, r24
+ 336:	90 93 2f 01 	sts	0x012F, r25
+ 33a:	a0 93 30 01 	sts	0x0130, r26
+ 33e:	b0 93 31 01 	sts	0x0131, r27
+ 342:	20 9a       	sbi	0x04, 0	; 4
+ 344:	21 9a       	sbi	0x04, 1	; 4
+ 346:	22 9a       	sbi	0x04, 2	; 4
+ 348:	8e e1       	ldi	r24, 0x1E	; 30
+ 34a:	90 e0       	ldi	r25, 0x00	; 0
+ 34c:	0e 94 cb 02 	call	0x596	; 0x596 <delay_ms>
+ 350:	83 e0       	ldi	r24, 0x03	; 3
+ 352:	0e 94 8e 01 	call	0x31c	; 0x31c <_ZN12OrangutanLCD13send_4bit_cmdEh>
+ 356:	86 e0       	ldi	r24, 0x06	; 6
+ 358:	90 e0       	ldi	r25, 0x00	; 0
+ 35a:	0e 94 cb 02 	call	0x596	; 0x596 <delay_ms>
+ 35e:	83 e0       	ldi	r24, 0x03	; 3
+ 360:	0e 94 8e 01 	call	0x31c	; 0x31c <_ZN12OrangutanLCD13send_4bit_cmdEh>
+ 364:	82 e0       	ldi	r24, 0x02	; 2
+ 366:	90 e0       	ldi	r25, 0x00	; 0
+ 368:	0e 94 cb 02 	call	0x596	; 0x596 <delay_ms>
+ 36c:	83 e0       	ldi	r24, 0x03	; 3
+ 36e:	0e 94 8e 01 	call	0x31c	; 0x31c <_ZN12OrangutanLCD13send_4bit_cmdEh>
+ 372:	82 e0       	ldi	r24, 0x02	; 2
+ 374:	90 e0       	ldi	r25, 0x00	; 0
+ 376:	0e 94 cb 02 	call	0x596	; 0x596 <delay_ms>
+ 37a:	82 e0       	ldi	r24, 0x02	; 2
+ 37c:	0e 94 8e 01 	call	0x31c	; 0x31c <_ZN12OrangutanLCD13send_4bit_cmdEh>
+ 380:	82 e0       	ldi	r24, 0x02	; 2
+ 382:	90 e0       	ldi	r25, 0x00	; 0
+ 384:	0e 94 cb 02 	call	0x596	; 0x596 <delay_ms>
+ 388:	88 e2       	ldi	r24, 0x28	; 40
+ 38a:	0e 94 84 01 	call	0x308	; 0x308 <_ZN12OrangutanLCD8send_cmdEh>
+ 38e:	88 e0       	ldi	r24, 0x08	; 8
+ 390:	0e 94 84 01 	call	0x308	; 0x308 <_ZN12OrangutanLCD8send_cmdEh>
+ 394:	81 e0       	ldi	r24, 0x01	; 1
+ 396:	0e 94 84 01 	call	0x308	; 0x308 <_ZN12OrangutanLCD8send_cmdEh>
+ 39a:	86 e0       	ldi	r24, 0x06	; 6
+ 39c:	0e 94 84 01 	call	0x308	; 0x308 <_ZN12OrangutanLCD8send_cmdEh>
+ 3a0:	8c e0       	ldi	r24, 0x0C	; 12
+ 3a2:	0e 94 84 01 	call	0x308	; 0x308 <_ZN12OrangutanLCD8send_cmdEh>
+ 3a6:	08 95       	ret
+
+000003a8 <_ZN12OrangutanLCD4initEv>:
+ 3a8:	80 91 32 01 	lds	r24, 0x0132
+ 3ac:	88 23       	and	r24, r24
+ 3ae:	29 f4       	brne	.+10     	; 0x3ba <_ZN12OrangutanLCD4initEv+0x12>
+ 3b0:	81 e0       	ldi	r24, 0x01	; 1
+ 3b2:	80 93 32 01 	sts	0x0132, r24
+ 3b6:	0e 94 93 01 	call	0x326	; 0x326 <_ZN12OrangutanLCD5init2Ev>
+ 3ba:	08 95       	ret
+
+000003bc <_ZN12OrangutanLCD5clearEv>:
+ 3bc:	81 e0       	ldi	r24, 0x01	; 1
+ 3be:	0e 94 84 01 	call	0x308	; 0x308 <_ZN12OrangutanLCD8send_cmdEh>
+ 3c2:	80 91 2a 01 	lds	r24, 0x012A
+ 3c6:	90 91 2b 01 	lds	r25, 0x012B
+ 3ca:	00 97       	sbiw	r24, 0x00	; 0
+ 3cc:	11 f1       	breq	.+68     	; 0x412 <_ZN12OrangutanLCD5clearEv+0x56>
+ 3ce:	a0 e0       	ldi	r26, 0x00	; 0
+ 3d0:	b0 e2       	ldi	r27, 0x20	; 32
+ 3d2:	08 c0       	rjmp	.+16     	; 0x3e4 <_ZN12OrangutanLCD5clearEv+0x28>
+ 3d4:	e0 91 2a 01 	lds	r30, 0x012A
+ 3d8:	f0 91 2b 01 	lds	r31, 0x012B
+ 3dc:	e2 0f       	add	r30, r18
+ 3de:	f3 1f       	adc	r31, r19
+ 3e0:	b0 83       	st	Z, r27
+ 3e2:	af 5f       	subi	r26, 0xFF	; 255
+ 3e4:	2a 2f       	mov	r18, r26
+ 3e6:	30 e0       	ldi	r19, 0x00	; 0
+ 3e8:	80 91 00 01 	lds	r24, 0x0100
+ 3ec:	90 e0       	ldi	r25, 0x00	; 0
+ 3ee:	01 97       	sbiw	r24, 0x01	; 1
+ 3f0:	60 91 01 01 	lds	r22, 0x0101
+ 3f4:	70 e0       	ldi	r23, 0x00	; 0
+ 3f6:	86 9f       	mul	r24, r22
+ 3f8:	a0 01       	movw	r20, r0
+ 3fa:	87 9f       	mul	r24, r23
+ 3fc:	50 0d       	add	r21, r0
+ 3fe:	96 9f       	mul	r25, r22
+ 400:	50 0d       	add	r21, r0
+ 402:	11 24       	eor	r1, r1
+ 404:	24 17       	cp	r18, r20
+ 406:	35 07       	cpc	r19, r21
+ 408:	2c f3       	brlt	.-54     	; 0x3d4 <_ZN12OrangutanLCD5clearEv+0x18>
+ 40a:	10 92 2d 01 	sts	0x012D, r1
+ 40e:	10 92 2c 01 	sts	0x012C, r1
+ 412:	08 95       	ret
+
+00000414 <clear>:
+ 414:	0e 94 de 01 	call	0x3bc	; 0x3bc <_ZN12OrangutanLCD5clearEv>
+ 418:	08 95       	ret
+
+0000041a <_ZN12OrangutanLCD5printEPKc>:
+ 41a:	ef 92       	push	r14
+ 41c:	ff 92       	push	r15
+ 41e:	cf 93       	push	r28
+ 420:	df 93       	push	r29
+ 422:	e8 2e       	mov	r14, r24
+ 424:	e7 01       	movw	r28, r14
+ 426:	7e 01       	movw	r14, r28
+ 428:	f9 2e       	mov	r15, r25
+ 42a:	e7 01       	movw	r28, r14
+ 42c:	02 c0       	rjmp	.+4      	; 0x432 <_ZN12OrangutanLCD5printEPKc+0x18>
+ 42e:	0e 94 89 01 	call	0x312	; 0x312 <_ZN12OrangutanLCD9send_dataEh>
+ 432:	89 91       	ld	r24, Y+
+ 434:	88 23       	and	r24, r24
+ 436:	d9 f7       	brne	.-10     	; 0x42e <_ZN12OrangutanLCD5printEPKc+0x14>
+ 438:	df 91       	pop	r29
+ 43a:	cf 91       	pop	r28
+ 43c:	ff 90       	pop	r15
+ 43e:	ef 90       	pop	r14
+ 440:	08 95       	ret
+
+00000442 <print>:
+ 442:	0e 94 0d 02 	call	0x41a	; 0x41a <_ZN12OrangutanLCD5printEPKc>
+ 446:	08 95       	ret
+
+00000448 <_ZN20OrangutanPushbuttons5init2Ev>:
+ 448:	87 b1       	in	r24, 0x07	; 7
+ 44a:	83 7d       	andi	r24, 0xD3	; 211
+ 44c:	87 b9       	out	0x07, r24	; 7
+ 44e:	88 b1       	in	r24, 0x08	; 8
+ 450:	8c 62       	ori	r24, 0x2C	; 44
+ 452:	88 b9       	out	0x08, r24	; 8
+ 454:	85 e0       	ldi	r24, 0x05	; 5
+ 456:	90 e0       	ldi	r25, 0x00	; 0
+ 458:	6f 93       	push	r22
+ 45a:	64 e0       	ldi	r22, 0x04	; 4
+ 45c:	6a 95       	dec	r22
+ 45e:	f1 f7       	brne	.-4      	; 0x45c <_ZN20OrangutanPushbuttons5init2Ev+0x14>
+ 460:	6f 91       	pop	r22
+ 462:	01 97       	sbiw	r24, 0x01	; 1
+ 464:	c9 f7       	brne	.-14     	; 0x458 <_ZN20OrangutanPushbuttons5init2Ev+0x10>
+ 466:	08 95       	ret
+
+00000468 <_ZN20OrangutanPushbuttons4initEv>:
+ 468:	80 91 33 01 	lds	r24, 0x0133
+ 46c:	88 23       	and	r24, r24
+ 46e:	29 f4       	brne	.+10     	; 0x47a <_ZN20OrangutanPushbuttons4initEv+0x12>
+ 470:	81 e0       	ldi	r24, 0x01	; 1
+ 472:	80 93 33 01 	sts	0x0133, r24
+ 476:	0e 94 24 02 	call	0x448	; 0x448 <_ZN20OrangutanPushbuttons5init2Ev>
+ 47a:	08 95       	ret
+
+0000047c <_ZN20OrangutanPushbuttons12waitForPressEh>:
+ 47c:	1f 93       	push	r17
+ 47e:	cf 93       	push	r28
+ 480:	df 93       	push	r29
+ 482:	18 2f       	mov	r17, r24
+ 484:	0e 94 34 02 	call	0x468	; 0x468 <_ZN20OrangutanPushbuttons4initEv>
+ 488:	c1 2f       	mov	r28, r17
+ 48a:	d0 e0       	ldi	r29, 0x00	; 0
+ 48c:	26 b1       	in	r18, 0x06	; 6
+ 48e:	30 e0       	ldi	r19, 0x00	; 0
+ 490:	20 95       	com	r18
+ 492:	30 95       	com	r19
+ 494:	2c 23       	and	r18, r28
+ 496:	3d 23       	and	r19, r29
+ 498:	21 15       	cp	r18, r1
+ 49a:	31 05       	cpc	r19, r1
+ 49c:	b9 f3       	breq	.-18     	; 0x48c <_ZN20OrangutanPushbuttons12waitForPressEh+0x10>
+ 49e:	8a e0       	ldi	r24, 0x0A	; 10
+ 4a0:	90 e0       	ldi	r25, 0x00	; 0
+ 4a2:	0e 94 cb 02 	call	0x596	; 0x596 <delay_ms>
+ 4a6:	26 b1       	in	r18, 0x06	; 6
+ 4a8:	30 e0       	ldi	r19, 0x00	; 0
+ 4aa:	20 95       	com	r18
+ 4ac:	30 95       	com	r19
+ 4ae:	2c 23       	and	r18, r28
+ 4b0:	3d 23       	and	r19, r29
+ 4b2:	21 15       	cp	r18, r1
+ 4b4:	31 05       	cpc	r19, r1
+ 4b6:	51 f3       	breq	.-44     	; 0x48c <_ZN20OrangutanPushbuttons12waitForPressEh+0x10>
+ 4b8:	86 b1       	in	r24, 0x06	; 6
+ 4ba:	80 95       	com	r24
+ 4bc:	81 23       	and	r24, r17
+ 4be:	df 91       	pop	r29
+ 4c0:	cf 91       	pop	r28
+ 4c2:	1f 91       	pop	r17
+ 4c4:	08 95       	ret
+
+000004c6 <wait_for_button_press>:
+ 4c6:	0e 94 3e 02 	call	0x47c	; 0x47c <_ZN20OrangutanPushbuttons12waitForPressEh>
+ 4ca:	08 95       	ret
+
+000004cc <_ZN20OrangutanPushbuttons14waitForReleaseEh>:
+ 4cc:	1f 93       	push	r17
+ 4ce:	18 2f       	mov	r17, r24
+ 4d0:	0e 94 34 02 	call	0x468	; 0x468 <_ZN20OrangutanPushbuttons4initEv>
+ 4d4:	86 b1       	in	r24, 0x06	; 6
+ 4d6:	81 23       	and	r24, r17
+ 4d8:	e9 f3       	breq	.-6      	; 0x4d4 <_ZN20OrangutanPushbuttons14waitForReleaseEh+0x8>
+ 4da:	8a e0       	ldi	r24, 0x0A	; 10
+ 4dc:	90 e0       	ldi	r25, 0x00	; 0
+ 4de:	0e 94 cb 02 	call	0x596	; 0x596 <delay_ms>
+ 4e2:	86 b1       	in	r24, 0x06	; 6
+ 4e4:	81 23       	and	r24, r17
+ 4e6:	b1 f3       	breq	.-20     	; 0x4d4 <_ZN20OrangutanPushbuttons14waitForReleaseEh+0x8>
+ 4e8:	86 b1       	in	r24, 0x06	; 6
+ 4ea:	81 23       	and	r24, r17
+ 4ec:	1f 91       	pop	r17
+ 4ee:	08 95       	ret
+
+000004f0 <wait_for_button_release>:
+ 4f0:	0e 94 66 02 	call	0x4cc	; 0x4cc <_ZN20OrangutanPushbuttons14waitForReleaseEh>
+ 4f4:	08 95       	ret
+
+000004f6 <_ZN13OrangutanTime17delayMicrosecondsEj>:
+ 4f6:	6f 93       	push	r22
+ 4f8:	64 e0       	ldi	r22, 0x04	; 4
+ 4fa:	6a 95       	dec	r22
+ 4fc:	f1 f7       	brne	.-4      	; 0x4fa <_ZN13OrangutanTime17delayMicrosecondsEj+0x4>
+ 4fe:	6f 91       	pop	r22
+ 500:	01 97       	sbiw	r24, 0x01	; 1
+ 502:	c9 f7       	brne	.-14     	; 0x4f6 <_ZN13OrangutanTime17delayMicrosecondsEj>
+ 504:	08 95       	ret
+
+00000506 <__vector_11>:
+ 506:	2f 92       	push	r2
+ 508:	8f 93       	push	r24
+ 50a:	9f 93       	push	r25
+ 50c:	2f b6       	in	r2, 0x3f	; 63
+ 50e:	80 91 41 01 	lds	r24, 0x0141
+ 512:	90 91 42 01 	lds	r25, 0x0142
+ 516:	01 96       	adiw	r24, 0x01	; 1
+ 518:	80 93 41 01 	sts	0x0141, r24
+ 51c:	90 93 42 01 	sts	0x0142, r25
+ 520:	90 e0       	ldi	r25, 0x00	; 0
+ 522:	80 91 43 01 	lds	r24, 0x0143
+ 526:	89 1f       	adc	r24, r25
+ 528:	80 93 43 01 	sts	0x0143, r24
+ 52c:	90 91 49 01 	lds	r25, 0x0149
+ 530:	9c 5f       	subi	r25, 0xFC	; 252
+ 532:	90 93 49 01 	sts	0x0149, r25
+ 536:	80 91 48 01 	lds	r24, 0x0148
+ 53a:	80 51       	subi	r24, 0x10	; 16
+ 53c:	97 42       	sbci	r25, 0x27	; 39
+ 53e:	c0 f0       	brcs	.+48     	; 0x570 <end>
+ 540:	90 93 49 01 	sts	0x0149, r25
+ 544:	80 93 48 01 	sts	0x0148, r24
+ 548:	80 91 44 01 	lds	r24, 0x0144
+ 54c:	90 91 45 01 	lds	r25, 0x0145
+ 550:	01 96       	adiw	r24, 0x01	; 1
+ 552:	80 93 44 01 	sts	0x0144, r24
+ 556:	90 93 45 01 	sts	0x0145, r25
+ 55a:	90 e0       	ldi	r25, 0x00	; 0
+ 55c:	80 91 46 01 	lds	r24, 0x0146
+ 560:	89 1f       	adc	r24, r25
+ 562:	80 93 46 01 	sts	0x0146, r24
+ 566:	80 91 47 01 	lds	r24, 0x0147
+ 56a:	89 1f       	adc	r24, r25
+ 56c:	80 93 47 01 	sts	0x0147, r24
+
+00000570 <end>:
+ 570:	2f be       	out	0x3f, r2	; 63
+ 572:	9f 91       	pop	r25
+ 574:	8f 91       	pop	r24
+ 576:	2f 90       	pop	r2
+ 578:	18 95       	reti
+
+0000057a <_ZN13OrangutanTime17delayMillisecondsEj>:
+ 57a:	cf 93       	push	r28
+ 57c:	df 93       	push	r29
+ 57e:	ec 01       	movw	r28, r24
+ 580:	05 c0       	rjmp	.+10     	; 0x58c <_ZN13OrangutanTime17delayMillisecondsEj+0x12>
+ 582:	88 ee       	ldi	r24, 0xE8	; 232
+ 584:	93 e0       	ldi	r25, 0x03	; 3
+ 586:	0e 94 7b 02 	call	0x4f6	; 0x4f6 <_ZN13OrangutanTime17delayMicrosecondsEj>
+ 58a:	21 97       	sbiw	r28, 0x01	; 1
+ 58c:	20 97       	sbiw	r28, 0x00	; 0
+ 58e:	c9 f7       	brne	.-14     	; 0x582 <_ZN13OrangutanTime17delayMillisecondsEj+0x8>
+ 590:	df 91       	pop	r29
+ 592:	cf 91       	pop	r28
+ 594:	08 95       	ret
+
+00000596 <delay_ms>:
+ 596:	0e 94 bd 02 	call	0x57a	; 0x57a <_ZN13OrangutanTime17delayMillisecondsEj>
+ 59a:	08 95       	ret
+
+0000059c <__prologue_saves__>:
+ 59c:	2f 92       	push	r2
+ 59e:	3f 92       	push	r3
+ 5a0:	4f 92       	push	r4
+ 5a2:	5f 92       	push	r5
+ 5a4:	6f 92       	push	r6
+ 5a6:	7f 92       	push	r7
+ 5a8:	8f 92       	push	r8
+ 5aa:	9f 92       	push	r9
+ 5ac:	af 92       	push	r10
+ 5ae:	bf 92       	push	r11
+ 5b0:	cf 92       	push	r12
+ 5b2:	df 92       	push	r13
+ 5b4:	ef 92       	push	r14
+ 5b6:	ff 92       	push	r15
+ 5b8:	0f 93       	push	r16
+ 5ba:	1f 93       	push	r17
+ 5bc:	cf 93       	push	r28
+ 5be:	df 93       	push	r29
+ 5c0:	cd b7       	in	r28, 0x3d	; 61
+ 5c2:	de b7       	in	r29, 0x3e	; 62
+ 5c4:	ca 1b       	sub	r28, r26
+ 5c6:	db 0b       	sbc	r29, r27
+ 5c8:	0f b6       	in	r0, 0x3f	; 63
+ 5ca:	f8 94       	cli
+ 5cc:	de bf       	out	0x3e, r29	; 62
+ 5ce:	0f be       	out	0x3f, r0	; 63
+ 5d0:	cd bf       	out	0x3d, r28	; 61
+ 5d2:	09 94       	ijmp
+
+000005d4 <__epilogue_restores__>:
+ 5d4:	2a 88       	ldd	r2, Y+18	; 0x12
+ 5d6:	39 88       	ldd	r3, Y+17	; 0x11
+ 5d8:	48 88       	ldd	r4, Y+16	; 0x10
+ 5da:	5f 84       	ldd	r5, Y+15	; 0x0f
+ 5dc:	6e 84       	ldd	r6, Y+14	; 0x0e
+ 5de:	7d 84       	ldd	r7, Y+13	; 0x0d
+ 5e0:	8c 84       	ldd	r8, Y+12	; 0x0c
+ 5e2:	9b 84       	ldd	r9, Y+11	; 0x0b
+ 5e4:	aa 84       	ldd	r10, Y+10	; 0x0a
+ 5e6:	b9 84       	ldd	r11, Y+9	; 0x09
+ 5e8:	c8 84       	ldd	r12, Y+8	; 0x08
+ 5ea:	df 80       	ldd	r13, Y+7	; 0x07
+ 5ec:	ee 80       	ldd	r14, Y+6	; 0x06
+ 5ee:	fd 80       	ldd	r15, Y+5	; 0x05
+ 5f0:	0c 81       	ldd	r16, Y+4	; 0x04
+ 5f2:	1b 81       	ldd	r17, Y+3	; 0x03
+ 5f4:	aa 81       	ldd	r26, Y+2	; 0x02
+ 5f6:	b9 81       	ldd	r27, Y+1	; 0x01
+ 5f8:	ce 0f       	add	r28, r30
+ 5fa:	d1 1d       	adc	r29, r1
+ 5fc:	0f b6       	in	r0, 0x3f	; 63
+ 5fe:	f8 94       	cli
+ 600:	de bf       	out	0x3e, r29	; 62
+ 602:	0f be       	out	0x3f, r0	; 63
+ 604:	cd bf       	out	0x3d, r28	; 61
+ 606:	ed 01       	movw	r28, r26
+ 608:	08 95       	ret
+
+0000060a <_exit>:
+ 60a:	f8 94       	cli
+
+0000060c <__stop_program>:
+ 60c:	ff cf       	rjmp	.-2      	; 0x60c <__stop_program>
