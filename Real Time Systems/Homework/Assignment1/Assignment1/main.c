@@ -31,7 +31,7 @@ int main()
 		}
 		else if(button == BOTTOM_BUTTON)
 		{
-			print("Button Button");
+			print("Bottom Button");
 			red_led(HIGH);
 		}
 		

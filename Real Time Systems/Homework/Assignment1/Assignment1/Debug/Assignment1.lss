@@ -373,7 +373,7 @@ static inline void green_led(unsigned char on)
  1a4:	84 30       	cpi	r24, 0x04	; 4
  1a6:	41 f4       	brne	.+16     	; 0x1b8 <main+0x48>
 		{
-			print("Button Button");
+			print("Bottom Button");
  1a8:	8b e1       	ldi	r24, 0x1B	; 27
  1aa:	91 e0       	ldi	r25, 0x01	; 1
  1ac:	0e 94 1d 02 	call	0x43a	; 0x43a <print>
