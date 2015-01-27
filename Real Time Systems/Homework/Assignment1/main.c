@@ -10,13 +10,6 @@
 
 #include <pololu/orangutan.h>
 
-void ClearAll()
-{
-	green_led(LOW);
-	red_led(LOW);
-	clear();
-}
-
 int main()
 {
 	const long blink_ms = 250;
