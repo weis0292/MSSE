@@ -330,7 +330,7 @@ int main()
 
 	while(1)
 	{
-		unsigned char button = wait_for_button_press(TOP_BUTTON | MIDDLE_BUTTON | BOTTOM_BUTTON);
+		unsigned char button = wait_for_button_press(ANY_BUTTON);
  174:	8c e2       	ldi	r24, 0x2C	; 44
  176:	0e 94 5f 02 	call	0x4be	; 0x4be <wait_for_button_press>
  17a:	c8 2f       	mov	r28, r24

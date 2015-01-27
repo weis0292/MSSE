@@ -16,7 +16,7 @@ int main()
 
 	while(1)
 	{
-		unsigned char button = wait_for_button_press(TOP_BUTTON | MIDDLE_BUTTON | BOTTOM_BUTTON);
+		unsigned char button = wait_for_button_press(ANY_BUTTON);
 		
 		if(button == TOP_BUTTON)
 		{
@@ -36,8 +36,10 @@ int main()
 		}
 		
 		wait_for_button_release(button);
+
 		green_led(LOW);
 		red_led(LOW);
+
 		clear();
 	}
 }
