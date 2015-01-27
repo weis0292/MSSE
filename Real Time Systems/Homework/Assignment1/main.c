@@ -6,6 +6,9 @@
  *
  * Created: 1/26/2015 9:04:18 PM
  *  Author: Mike
+ * This program will read the input of the three buttons.  If any of the buttons
+ * are pressed the program will blink the appropriate LED for as long as the button
+ * is being held.
  */
 
 #include <pololu/orangutan.h>
