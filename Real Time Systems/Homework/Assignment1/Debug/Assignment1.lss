@@ -442,7 +442,7 @@ void ToggleLEDIfButtonPressed(unsigned char pressedState, unsigned long *ticks, 
  20c:	08 95       	ret
 
 0000020e <main>:
-const long _blinkMS = 250;
+const unsigned long _blinkMS = 250;
 
 void ToggleLEDIfButtonPressed(unsigned char pressedState, unsigned long *ticks, void (*ledMethod)(unsigned char));
 

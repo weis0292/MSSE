@@ -14,7 +14,7 @@
 #include <pololu/orangutan.h>
 
 // The time an LED will stay at a given state when the button is pressed
-const long _blinkMS = 250;
+const unsigned long _blinkMS = 250;
 
 void ToggleLEDIfButtonPressed(unsigned char pressedState, unsigned long *ticks, void (*ledMethod)(unsigned char));
 
