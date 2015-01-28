@@ -46,7 +46,7 @@ Discarded input sections
  .text._pololu_atmel_studio_6_workaround
                 0x00000000        0xc main.o
  .data.w.2067   0x00000000        0x1 main.o
- .rodata.blink_ms
+ .rodata._blinkMS
                 0x00000000        0x4 main.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib\libpololu_atmega1284p.a(OrangutanLCD.o)
  .text.void_getchar
@@ -735,10 +735,10 @@ END GROUP
  *(.debug_frame)
  .debug_frame   0x00000000       0xac main.o
 
-.debug_str      0x00000000      0x2c0
+.debug_str      0x00000000      0x2b6
  *(.debug_str)
- .debug_str     0x00000000      0x2c0 main.o
-                                0x304 (size before relaxing)
+ .debug_str     0x00000000      0x2b6 main.o
+                                0x2fa (size before relaxing)
 
 .debug_loc      0x00000000      0x49d
  *(.debug_loc)

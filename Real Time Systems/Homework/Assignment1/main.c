@@ -14,52 +14,52 @@
 #include <pololu/orangutan.h>
 
 // The time an LED will stay at a given state when the button is pressed
-const long blink_ms = 250;
+const long _blinkMS = 250;
 
-void ToggleLEDIfButtonPressed(unsigned char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char));
+void ToggleLEDIfButtonPressed(unsigned char pressedState, unsigned long *ticks, void (*ledMethod)(unsigned char));
 
 int main()
 {
 	clear();
 	
 	// The amount of time the button has been held since the last LED toggle
-	unsigned long ticks_top = 0;
-	unsigned long ticks_bottom = 0;
+	unsigned long ticksTop = 0;
+	unsigned long ticksBottom = 0;
 
 	while(1)
 	{
-		unsigned char pressed_state = button_is_pressed(ANY_BUTTON);
+		unsigned char pressedState = button_is_pressed(ANY_BUTTON);
 		// The middle button will count as both the top and the bottom button (fun!)
-		unsigned char pressed_state_top = pressed_state & (TOP_BUTTON | MIDDLE_BUTTON);
-		unsigned char pressed_state_bottom = pressed_state & (BOTTOM_BUTTON | MIDDLE_BUTTON);
+		unsigned char pressedStateTop = pressedState & (TOP_BUTTON | MIDDLE_BUTTON);
+		unsigned char pressedStateBottom = pressedState & (BOTTOM_BUTTON | MIDDLE_BUTTON);
 
 		// Deal with the top button and the green LED
-		ToggleLEDIfButtonPressed(pressed_state_top, &ticks_top, green_led);
+		ToggleLEDIfButtonPressed(pressedStateTop, &ticksTop, green_led);
 
 		// Deal with the bottom button and the red LED
-		ToggleLEDIfButtonPressed(pressed_state_bottom, &ticks_bottom, red_led);
+		ToggleLEDIfButtonPressed(pressedStateBottom, &ticksBottom, red_led);
 	}
 }
 
 // Here we can put common code that is done for both LEDs and just pass in the led function
-void ToggleLEDIfButtonPressed(unsigned char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char))
+void ToggleLEDIfButtonPressed(unsigned char pressedState, unsigned long *ticks, void (*ledMethod)(unsigned char))
 {
 	// Check if button is pressed
-	if(pressed_state)
+	if(pressedState)
 	{
 		// See how long the button has been pressed
-		unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - *ticks)) / 1000;
-		if((elapsed_time_ms >= blink_ms) || (*ticks == 0))
+		unsigned long elapsedTimeMS = (ticks_to_microseconds(get_ticks() - *ticks)) / 1000;
+		if((elapsedTimeMS >= _blinkMS) || (*ticks == 0))
 		{
 			// Time has elapsed, toggle LED and set new ticks.
-			(*led_method)(TOGGLE);
+			(*ledMethod)(TOGGLE);
 			*ticks = get_ticks();
 		}
 	}
 	else
 	{
 		// No button is pressed, reset LED and ticks
-		(*led_method)(LOW);
+		(*ledMethod)(LOW);
 		*ticks = 0;
 	}
 }
