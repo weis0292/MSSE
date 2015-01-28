@@ -16,7 +16,7 @@
 // The time an LED will stay at a given state when the button is pressed
 const long blink_ms = 250;
 
-void ToggleLEDIfButtonPressed(char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char));
+void ToggleLEDIfButtonPressed(unsigned char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char));
 
 int main()
 {
@@ -42,7 +42,7 @@ int main()
 }
 
 // Here we can put common code that is done for both LEDs and just pass in the led function
-void ToggleLEDIfButtonPressed(char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char))
+void ToggleLEDIfButtonPressed(unsigned char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char))
 {
 	// Check if button is pressed
 	if(pressed_state)
