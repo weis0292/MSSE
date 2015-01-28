@@ -13,10 +13,15 @@
 
 #include <pololu/orangutan.h>
 
+// The time an LED will stay at a given state when the button is pressed
+const long blink_ms = 250;
+
+void ToggleLEDIfButtonPressed(char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char));
+
 int main()
 {
-	// The time an LED will stay at a given state when the button is pressed
-	const long blink_ms = 250;
+	clear();
+	
 	// The amount of time the button has been held since the last LED toggle
 	unsigned long ticks_top = 0;
 	unsigned long ticks_bottom = 0;
@@ -29,35 +34,32 @@ int main()
 		unsigned char pressed_state_bottom = pressed_state & (BOTTOM_BUTTON | MIDDLE_BUTTON);
 
 		// Deal with the top button and the green LED
-		if(pressed_state_top)
-		{
-			unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - ticks_top)) / 1000;
-			if((elapsed_time_ms >= blink_ms) || (ticks_top == 0))
-			{
-				green_led(TOGGLE);
-				ticks_top = get_ticks();
-			}
-		}
-		else
-		{
-			green_led(LOW);
-			ticks_top = 0;
-		}
+		ToggleLEDIfButtonPressed(pressed_state_top, &ticks_top, green_led);
 
 		// Deal with the bottom button and the red LED
-		if(pressed_state_bottom)
+		ToggleLEDIfButtonPressed(pressed_state_bottom, &ticks_bottom, red_led);
+	}
+}
+
+// Here we can put common code that is done for both LEDs and just pass in the led function
+void ToggleLEDIfButtonPressed(char pressed_state, unsigned long *ticks, void (*led_method)(unsigned char))
+{
+	// Check if button is pressed
+	if(pressed_state)
+	{
+		// See how long the button has been pressed
+		unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - *ticks)) / 1000;
+		if((elapsed_time_ms >= blink_ms) || (*ticks == 0))
 		{
-			unsigned long elapsed_time_ms = (ticks_to_microseconds(get_ticks() - ticks_bottom)) / 1000;
-			if((elapsed_time_ms >= blink_ms) || (ticks_bottom == 0))
-			{
-				red_led(TOGGLE);
-				ticks_bottom = get_ticks();
-			}
+			// Time has elapsed, toggle LED and set new ticks.
+			(*led_method)(TOGGLE);
+			*ticks = get_ticks();
 		}
-		else
-		{
-			red_led(LOW);
-			ticks_bottom = 0;
-		}
+	}
+	else
+	{
+		// No button is pressed, reset LED and ticks
+		(*led_method)(LOW);
+		*ticks = 0;
 	}
 }
