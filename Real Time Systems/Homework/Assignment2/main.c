@@ -30,7 +30,11 @@ void DisplayVersionInformation();
 
 void SetUpIO();
 void PlaySong(bool shouldPlaySong);
-void ToggleLEDs();
+unsigned long ManageLED(bool isLEDFlashing, unsigned long timeMS, int blinkTimeMS, void (*toggleLEDMethod)(), void (*turnOffLEDMethod)());
+void ToggleFirstLED();
+void TurnOffFirstLED();
+void ToggleSecondLED();
+void TurnOffSecondLED();
 
 void SetUpSerialPort();
 void CheckForNewBytesReceived();
@@ -53,7 +57,23 @@ int main()
 	while(true)
 	{
 		CheckForNewBytesReceived();
-		ToggleLEDs(&isFirstLEDFlashing, &firstTimeMS, &isSecondLEDFlashing, &secondTimeMS);
+
+		unsigned char button = get_single_debounced_button_press(ANY_BUTTON);
+		PlaySong(button & MIDDLE_BUTTON);
+
+		bool isTopButtonPressed = button & TOP_BUTTON;
+		if(isTopButtonPressed)
+		{
+			isFirstLEDFlashing = !isFirstLEDFlashing;
+		}
+		firstTimeMS = ManageLED(isFirstLEDFlashing, firstTimeMS, firstBlinkTime, ToggleFirstLED, TurnOffFirstLED);
+
+		bool isBottomButtonPressed = button & BOTTOM_BUTTON;
+		if(isBottomButtonPressed)
+		{
+			isSecondLEDFlashing = !isSecondLEDFlashing;
+		}
+		secondTimeMS = ManageLED(isSecondLEDFlashing, secondTimeMS, secondBlinkTime, ToggleSecondLED, TurnOffSecondLED);
 	}
 }
 
@@ -78,56 +98,54 @@ void SetUpIO()
 	DDRD |= _secondMask;
 }
 
-void ToggleLEDs(bool *isFirstLEDFlashing, unsigned long *firstTimeMS, bool *isSecondLEDFlashing, unsigned long *secondTimeMS)
-{
-	unsigned char button = get_single_debounced_button_press(ANY_BUTTON);
-
-	PlaySong(button & MIDDLE_BUTTON);
-	if (button & TOP_BUTTON)
-	{
-		*isFirstLEDFlashing = !*isFirstLEDFlashing;
-	}
-	if (button & BOTTOM_BUTTON)
-	{
-		*isSecondLEDFlashing = !*isSecondLEDFlashing;
-	}
-
-	unsigned long time = get_ms();
-	if (*isFirstLEDFlashing)
-	{
-		if((time - *firstTimeMS) >= firstBlinkTime)
-		{
-			PORTC ^= _firstMask;
-			*firstTimeMS = time;
-		}
-	}
-	else
-	{
-		PORTC &= ~_firstMask;
-		*firstTimeMS = 0;
-	}
-
-	if (*isSecondLEDFlashing)
-	{
-		if((time - *secondTimeMS) >= secondBlinkTime)
-		{
-			PORTD ^= _secondMask;
-			*secondTimeMS = time;
-		}
-	}
-	else
-	{
-		PORTD &= ~_secondMask;
-		*secondTimeMS = 0;
-	}
-}
-
 void PlaySong(bool shouldPlaySong)
 {
 	if (shouldPlaySong)
 	{
 		play("!T200 L4 V12 MS eeeee8ce8g2ddddd8gf8e8d8g8f8eeeee8ce8g.g8a8a8g8g8f8f8eagfeg8ec8dgc2");
 	}
+}
+
+unsigned long ManageLED(bool isLEDFlashing, unsigned long timeMS, int blinkTimeMS, void (*toggleLEDMethod)(), void (*turnOffLEDMethod)())
+{
+	unsigned long returnTime = timeMS;
+	unsigned long time = get_ms();
+
+	if(isLEDFlashing)
+	{
+		if((time - timeMS) >= blinkTimeMS)
+		{
+			(*toggleLEDMethod)();
+			returnTime = time;
+		}
+	}
+	else
+	{
+		(*turnOffLEDMethod)();
+		returnTime = 0;
+	}
+	
+	return returnTime;
+}
+
+void ToggleFirstLED()
+{
+	PORTC ^= _firstMask;
+}
+
+void TurnOffFirstLED()
+{
+	PORTC &= ~_firstMask;
+}
+
+void ToggleSecondLED()
+{
+	PORTD ^= _secondMask;
+}
+
+void TurnOffSecondLED()
+{
+	PORTD &= ~_secondMask;
 }
 
 void SetUpSerialPort()
