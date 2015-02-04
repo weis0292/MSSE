@@ -6,6 +6,10 @@
  *
  * Created: 1/30/2015 10:51:35 PM
  *  Author: Mike
+ * This program will flash LEDs based on the ms setting.  The time setting
+ * can be modified through the serial port.  A '+' will increase the time
+ * between LED toggles, and a '-' will decrease the time.  An 'S' or 's' will
+ * toggle between the two LED time periods determining which time will be modified.
  */
 
 #include <pololu/orangutan.h>
@@ -21,16 +25,16 @@ const int _secondMask = 0x08;
 
 char _receiveBuffer[32];
 unsigned char _receiveBufferPosition = 0;
-int firstBlinkTime = 250;
-int secondBlinkTime = 250;
-int *currentBlinkTime = &firstBlinkTime;
+int _firstBlinkTime = 250;
+int _secondBlinkTime = 250;
+int *_currentBlinkTime = &_firstBlinkTime;
 
 void SetupDisplay();
 void DisplayVersionInformation();
 
 void SetUpIO();
 void PlaySong(bool shouldPlaySong);
-unsigned long ManageLED(bool isLEDFlashing, unsigned long timeMS, int blinkTimeMS, void (*toggleLEDMethod)(), void (*turnOffLEDMethod)());
+unsigned long ManageLED(bool isLEDFlashing, unsigned long timeMS, int blinkTimeMS, void (*toggleLED)(), void (*turnOffLED)());
 void ToggleFirstLED();
 void TurnOffFirstLED();
 void ToggleSecondLED();
@@ -59,21 +63,24 @@ int main()
 		CheckForNewBytesReceived();
 
 		unsigned char button = get_single_debounced_button_press(ANY_BUTTON);
+		// Have some fun and play our favorite song if the middle button is pressed
 		PlaySong(button & MIDDLE_BUTTON);
 
+		// Deal with the top button and the first LED
 		bool isTopButtonPressed = button & TOP_BUTTON;
 		if(isTopButtonPressed)
 		{
 			isFirstLEDFlashing = !isFirstLEDFlashing;
 		}
-		firstTimeMS = ManageLED(isFirstLEDFlashing, firstTimeMS, firstBlinkTime, ToggleFirstLED, TurnOffFirstLED);
+		firstTimeMS = ManageLED(isFirstLEDFlashing, firstTimeMS, _firstBlinkTime, ToggleFirstLED, TurnOffFirstLED);
 
+		// Deal with the bottom button and the second LED
 		bool isBottomButtonPressed = button & BOTTOM_BUTTON;
 		if(isBottomButtonPressed)
 		{
 			isSecondLEDFlashing = !isSecondLEDFlashing;
 		}
-		secondTimeMS = ManageLED(isSecondLEDFlashing, secondTimeMS, secondBlinkTime, ToggleSecondLED, TurnOffSecondLED);
+		secondTimeMS = ManageLED(isSecondLEDFlashing, secondTimeMS, _secondBlinkTime, ToggleSecondLED, TurnOffSecondLED);
 	}
 }
 
@@ -106,7 +113,7 @@ void PlaySong(bool shouldPlaySong)
 	}
 }
 
-unsigned long ManageLED(bool isLEDFlashing, unsigned long timeMS, int blinkTimeMS, void (*toggleLEDMethod)(), void (*turnOffLEDMethod)())
+unsigned long ManageLED(bool isLEDFlashing, unsigned long timeMS, int blinkTimeMS, void (*toggleLED)(), void (*turnOffLED)())
 {
 	unsigned long returnTime = timeMS;
 	unsigned long time = get_ms();
@@ -115,13 +122,13 @@ unsigned long ManageLED(bool isLEDFlashing, unsigned long timeMS, int blinkTimeM
 	{
 		if((time - timeMS) >= blinkTimeMS)
 		{
-			(*toggleLEDMethod)();
+			(*toggleLED)();
 			returnTime = time;
 		}
 	}
 	else
 	{
-		(*turnOffLEDMethod)();
+		(*turnOffLED)();
 		returnTime = 0;
 	}
 	
@@ -178,19 +185,19 @@ void ProcessReceivedByte(char byte)
 	switch(byte)
 	{
 		case '+':
-			*currentBlinkTime += _blinkChangeMS;
+			*_currentBlinkTime += _blinkChangeMS;
 			PrintBlinkSpeeds();
 		break;
 
 		case '-':
-			*currentBlinkTime -= _blinkChangeMS;
+			*_currentBlinkTime -= _blinkChangeMS;
 			PrintBlinkSpeeds();
 		break;
 
 		// Switch which speed the serial port is modifying
 		case 'S':
 		case 's':
-			currentBlinkTime = (currentBlinkTime == &firstBlinkTime) ? &secondBlinkTime : &firstBlinkTime;
+			_currentBlinkTime = (_currentBlinkTime == &_firstBlinkTime) ? &_secondBlinkTime : &_firstBlinkTime;
 		break;
 	}
 }
@@ -198,7 +205,7 @@ void ProcessReceivedByte(char byte)
 void PrintBlinkSpeeds()
 {
 	clear();
-	printf("Top MS: %4d", firstBlinkTime);
+	printf("Top MS: %4d", _firstBlinkTime);
 	lcd_goto_xy(0, 1);
-	printf("Bot MS: %4d", secondBlinkTime);
+	printf("Bot MS: %4d", _secondBlinkTime);
 }
