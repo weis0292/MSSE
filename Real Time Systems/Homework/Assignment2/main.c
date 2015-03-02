@@ -190,8 +190,11 @@ void ProcessReceivedByte(char byte)
 		break;
 
 		case '-':
-			*_currentBlinkTime -= _blinkChangeMS;
-			PrintBlinkSpeeds();
+			if (*_currentBlinkTime > 0)
+			{
+				*_currentBlinkTime -= _blinkChangeMS;
+				PrintBlinkSpeeds();
+			}
 		break;
 
 		// Switch which speed the serial port is modifying
