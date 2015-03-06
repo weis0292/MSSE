@@ -21,7 +21,7 @@ long g_counts_m1 = 0;
 // Motor speed variables
 int g_desired_speed = 0;
 int g_current_speed = 0;
-int g_motor_speed_change = 0x05;
+int g_motor_speed_change = 0x08;
 int g_max_motor_speed = 0xFF;
 int g_min_motor_speed = -0xFF;
 
@@ -61,7 +61,15 @@ int main ()
 		unsigned char button = get_single_debounced_button_press(ANY_BUTTON);
 		if ((button & TOP_BUTTON) > 0)
 		{
-			g_desired_speed = fmin(g_max_motor_speed, g_desired_speed + g_motor_speed_change);
+			// Let's stop by zero on the way by
+			if ((g_desired_speed < 0) && (g_desired_speed + g_motor_speed_change > 0))
+			{
+				g_desired_speed = 0;
+			}
+			else
+			{
+				g_desired_speed = fmin(g_max_motor_speed, g_desired_speed + g_motor_speed_change);
+			}
 		}
 		if ((button & MIDDLE_BUTTON) > 0)
 		{
@@ -69,7 +77,15 @@ int main ()
 		}
 		if ((button & BOTTOM_BUTTON) > 0)
 		{
-			g_desired_speed = fmax(g_min_motor_speed, g_desired_speed - g_motor_speed_change);
+			// Let's stop by zero on the way by
+			if ((g_desired_speed > 0) && (g_desired_speed - g_motor_speed_change < 0))
+			{
+				g_desired_speed = 0;
+			}
+			else
+			{
+				g_desired_speed = fmax(g_min_motor_speed, g_desired_speed - g_motor_speed_change);
+			}
 		}
 	}
 }
