@@ -25,17 +25,26 @@ int g_motor_speed_change = 0x08;
 int g_max_motor_speed = 0xFF;
 int g_min_motor_speed = -0xFF;
 
+// Task release variable
+bool g_release_print_task = false;
+bool g_release_motor_change_task = false;
+
 void lcd_init();
-// Timer 0 is responsible for keeping track of the
-// encoder counts for the motor(s).  The timer is
-// set to fire an interrupt every 100 microseconds.
-void timer0_init();
+void print_motor_information();
+void move_motor_to_desired();
+
+// This is the interrupt that handles the pin
+// changes on the A and B channels of the motor
+// encoder.
+void pc_interrupt_init();
+
 // Timer 1 is responsible for printing values out
 // to the screen.  It was determined that the screen
 // couldn't handle being written to as often as we
 // have updated values, so the timer is currently
 // set to interrupt every 200 milliseconds.
 void timer1_init();
+
 // Timer 3 is responsible for changing the motor
 // speed to the desired speed.  This functionality
 // was originally in timer 1, but the 200 milliseconds
@@ -51,7 +60,7 @@ void timer3_init();
 int main ()
 {
 	lcd_init();
-	timer0_init();
+	pc_interrupt_init();
 	timer1_init();
 	timer3_init();
 	sei();
@@ -87,6 +96,18 @@ int main ()
 				g_desired_speed = fmax(g_min_motor_speed, g_desired_speed - g_motor_speed_change);
 			}
 		}
+
+		if (g_release_motor_change_task)
+		{
+			g_release_motor_change_task = false;
+			move_motor_to_desired();
+		}
+
+		if (g_release_print_task)
+		{
+			g_release_print_task = false;
+			print_motor_information();
+		}
 	}
 }
 
@@ -96,12 +117,13 @@ void lcd_init()
 	lcd_init_printf();
 }
 
-void timer0_init()
+void pc_interrupt_init()
 {
-	TCCR0A = 0x82;
-	TCCR0B = 0x02;
-	OCR0A = 0xFA;
-	TIMSK0 = 0x02;
+	// Enable pin change interrupt 3
+	PCICR = 0x08;
+	// Set encoder pins D2 and D3 to
+	// trigger the pin change interrupt
+	PCMSK3 = 0x0C;
 }
 
 void timer1_init()
@@ -122,7 +144,38 @@ void timer3_init()
 	TIMSK3 = 0x02;
 }
 
-ISR (TIMER0_COMPA_vect)
+void print_motor_information()
+{
+	// Print the current motor speed
+	lcd_goto_xy(0, 0);
+	printf("M1 Speed: %4i", g_current_speed);
+
+	// Print the encoder count information
+	lcd_goto_xy(0, 1);
+	printf("Enc: %9ld", g_counts_m1);
+}
+
+void move_motor_to_desired()
+{
+	if (g_current_speed != g_desired_speed)
+	{
+		int desired_speed = 0;
+		if (g_current_speed > g_desired_speed)
+		{
+			desired_speed = fmax(g_desired_speed, g_current_speed - g_motor_speed_change);
+		}
+		else
+		{
+			desired_speed = fmin(g_desired_speed, g_current_speed + g_motor_speed_change);
+		}
+
+		// Make sure the current speed is within the allowable limits and set the speed
+		g_current_speed = fmin(g_max_motor_speed, fmax(g_min_motor_speed, desired_speed));
+		set_m1_speed(g_current_speed);
+	}
+}
+
+ISR (PCINT3_vect)
 {
 	// Get the current state of the encoder
 	unsigned char m1a_val = is_digital_input_high(IO_D3);
@@ -153,31 +206,10 @@ ISR (TIMER0_COMPA_vect)
 
 ISR (TIMER1_COMPA_vect)
 {
-	// Print the current motor speed
-	lcd_goto_xy(0, 0);
-	printf("M1 Speed: %4i", g_current_speed);
-
-	// Print the encoder count information
-	lcd_goto_xy(0, 1);
-	printf("Enc: %9ld", g_counts_m1);
+	g_release_print_task = true;
 }
 
 ISR (TIMER3_COMPA_vect)
 {
-	if (g_current_speed != g_desired_speed)
-	{
-		int desired_speed = 0;
-		if (g_current_speed > g_desired_speed)
-		{
-			desired_speed = fmax(g_desired_speed, g_current_speed - g_motor_speed_change);
-		}
-		else
-		{
-			desired_speed = fmin(g_desired_speed, g_current_speed + g_motor_speed_change);
-		}
-
-		// Make sure the current speed is within the allowable limits and set the speed
-		g_current_speed = fmin(g_max_motor_speed, fmax(g_min_motor_speed, desired_speed));
-		set_m1_speed(g_current_speed);
-	}
+	g_release_motor_change_task = true;
 }
