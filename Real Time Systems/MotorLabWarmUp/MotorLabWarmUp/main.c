@@ -14,8 +14,8 @@
 #include <pololu/orangutan.h>
 
 // Encoder variables
-unsigned char g_last_m1a_val = 0;
-unsigned char g_last_m1b_val = 0;
+bool g_last_m1a_val = 0;
+bool g_last_m1b_val = 0;
 long g_counts_m1 = 0;
 
 // Motor speed variables
@@ -178,13 +178,13 @@ void move_motor_to_desired()
 ISR (PCINT3_vect)
 {
 	// Get the current state of the encoder
-	unsigned char m1a_val = is_digital_input_high(IO_D3);
-	unsigned char m1b_val = is_digital_input_high(IO_D2);
+	bool m1a_val = (PIND & (1 << IO_D3)) > 0;
+	bool m1b_val = (PIND & (1 << IO_D2)) > 0;
 
 	// Determine which way the encoder is turning
 	// using the previous state
-	char plus_m1 = m1a_val ^ g_last_m1b_val;
-	char minus_m1 = m1b_val ^ g_last_m1a_val;
+	bool plus_m1 = m1a_val ^ g_last_m1b_val;
+	bool minus_m1 = m1b_val ^ g_last_m1a_val;
 
 	// Increment the encoder counts if the motor
 	// is turning in the positive direction
