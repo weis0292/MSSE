@@ -10,7 +10,7 @@
 
 #include <stdbool.h>
 
-void nunchuck_update_data();
+void nunchuck_refresh_data();
 unsigned char nunchuck_get_joystick_x();
 unsigned char nunchuck_get_joystick_y();
 uint16_t nunchuck_get_accelerometer_x();

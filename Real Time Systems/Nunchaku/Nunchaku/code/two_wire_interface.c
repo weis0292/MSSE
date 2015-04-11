@@ -27,9 +27,6 @@ void twi_initialize()
 	TWSR = 0;
 	TWBR = ((F_CPU / SCL_CLOCK) - 16) / 2;
 
-	//set_digital_output(IO_C0, HIGH);
-	//set_digital_output(IO_C1, HIGH);
-
 	is_twi_initialized = true;
 }
 
@@ -78,10 +75,8 @@ void twi_stop()
 	twi_verify_is_initialized();
 
 	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
-	while (TWCR & (1 << TWSTO)) { }
 
-	//lcd_goto_xy(0, 1);
-	//printf("stop success");
+	while (TWCR & (1 << TWSTO)) { }
 }
 
 void twi_write(unsigned char data)
@@ -96,6 +91,7 @@ void twi_write(unsigned char data)
 		lcd_goto_xy(0, 1);
 		printf("ERROR Write");
 	}
+
 	lcd_goto_xy(12, 1);
 	printf("%d", TW_STATUS & 0xF8);
 }

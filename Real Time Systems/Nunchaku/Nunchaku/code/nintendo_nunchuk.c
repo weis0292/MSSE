@@ -51,17 +51,21 @@ void nunchuck_conversion_command()
 	//delay_ms(100);
 	twi_write(0x00);
 	twi_stop();
+
+	// This delay was added due to testing.
+	// No delay causes a read error on the
+	// next communication with the nunchuck
 	delay_ms(1);
 }
 
-unsigned char bytes[6];
+unsigned char nunchuck_data[6];
 
 unsigned char nunchuck_decode_byte(unsigned char byte)
 {
 	return (byte ^ 0x17) + 0x17;
 }
 
-void nunchuck_update_data()
+void nunchuck_refresh_data()
 {
 	nunchuck_check_is_initialized();
 	nunchuck_conversion_command();
@@ -77,7 +81,7 @@ void nunchuck_update_data()
 	{
 		bool is_last_byte = (i == (byte_count - 1));
 		unsigned char data = is_last_byte ? twi_read_with_nak() : twi_read_with_ack();
-		bytes[i] = nunchuck_decode_byte(data);
+		nunchuck_data[i] = nunchuck_decode_byte(data);
 		//if (i == 0)
 		//{
 		//data = (twi_read() ^ 0x17) + 0x17;
@@ -97,7 +101,7 @@ void nunchuck_update_data()
 
 unsigned char nunchuck_get_joystick_x()
 {
-	return bytes[0];
+	return nunchuck_data[0];
 	//nunchuck_check_is_initialized();
 	//nunchuck_conversion_command();
 
@@ -128,30 +132,30 @@ unsigned char nunchuck_get_joystick_x()
 
 unsigned char nunchuck_get_joystick_y()
 {
-	return bytes[1];
+	return nunchuck_data[1];
 }
 
 uint16_t nunchuck_get_accelerometer_x()
 {
-	return (bytes[2] << 2) | ((bytes[5] | 0x0C) >> 2);
+	return (nunchuck_data[2] << 2) | ((nunchuck_data[5] | 0x0C) >> 2);
 }
 
 uint16_t nunchuck_get_accelerometer_y()
 {
-	return (bytes[3] << 2) | ((bytes[5] | 0x30) >> 4);
+	return (nunchuck_data[3] << 2) | ((nunchuck_data[5] | 0x30) >> 4);
 }
 
 uint16_t nunchuck_get_accelerometer_z()
 {
-	return (bytes[4] << 2) | ((bytes[5] | 0xC0) >> 6);
+	return (nunchuck_data[4] << 2) | ((nunchuck_data[5] | 0xC0) >> 6);
 }
 
 bool nunchuck_get_button_c()
 {
-	return (bytes[5] & 0x02) == 0;
+	return (nunchuck_data[5] & 0x02) == 0;
 }
 
 bool nunchuck_get_button_z()
 {
-	return (bytes[5] & 0x01) == 0;
+	return (nunchuck_data[5] & 0x01) == 0;
 }
