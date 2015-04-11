@@ -22,8 +22,11 @@ int main()
 	{
 	unsigned char joystick_x = nunchuck_get_joystick_x();
 
-	lcd_goto_xy(0, 0);
-	printf("%d", joystick_x);
-	delay_ms(100);
+	clear();
+	//lcd_goto_xy(0, 0);
+	printf("%3d", joystick_x);
+	//delay_ms(100);
 	}
+	
+	//while(true) { }
 }

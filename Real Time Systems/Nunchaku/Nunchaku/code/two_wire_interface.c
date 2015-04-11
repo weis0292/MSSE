@@ -100,13 +100,20 @@ void twi_write(unsigned char data)
 	printf("%d", TW_STATUS & 0xF8);
 }
 
-unsigned char twi_read()
+unsigned char twi_read_with_ack()
 {
 	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
 
 	twi_wait_for_twint_flag_set();
-	//lcd_goto_xy(0, 1);
-	//printf("read success");
+
+	return TWDR;
+}
+
+unsigned char twi_read_with_nak()
+{
+	TWCR = (1 << TWINT) | (1 << TWEN);
+
+	twi_wait_for_twint_flag_set();
 
 	return TWDR;
 }

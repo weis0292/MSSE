@@ -12,70 +12,146 @@
 
 #include "../headers/nintendo_nunchuk.h"
 #include "../headers/two_wire_interface.h"
-//#include "../headers/i2cmaster.h"
 
 #define NUNCHUCK_ADDRESS 0x52
 
 bool is_initialized = false;
 
-void initialize()
+void nunchuck_initialize()
 {
-	//twi_init();
-	//delay_ms(100);
 	twi_start((NUNCHUCK_ADDRESS << 1) | TW_WRITE);
 	twi_write(0x40);
 	twi_write(0x00);
 	twi_stop();
-	delay_ms(100);
 
 	is_initialized = true;
 }
 
-void check_is_initialized()
+void nunchuck_check_is_initialized()
 {
 	if (!is_initialized)
 	{
-		initialize();
+		nunchuck_initialize();
 	}
 }
 
-unsigned char nunchuck_get_joystick_x()
+void nunchuck_conversion_command()
 {
-	check_is_initialized();
+	nunchuck_check_is_initialized();
 
-	unsigned char data = 0x00;
-
-	delay_ms(100);
 	twi_start((NUNCHUCK_ADDRESS << 1) | TW_WRITE);
 	//twi_start(0xA4);
 	//twi_write(0x40);
 	//delay_ms(100);
 	//if (i2c_write(0x00) > 0)
 	//{
-		//lcd_goto_xy(0, 1);
-		//printf("Error Write");
+	//lcd_goto_xy(0, 1);
+	//printf("Error Write");
 	//}
 	//delay_ms(100);
 	twi_write(0x00);
 	twi_stop();
-	delay_ms(100);
+	delay_ms(1);
+}
+
+unsigned char bytes[6];
+
+unsigned char nunchuck_decode_byte(unsigned char byte)
+{
+	return (byte ^ 0x17) + 0x17;
+}
+
+void nunchuck_update_data()
+{
+	nunchuck_check_is_initialized();
+	nunchuck_conversion_command();
+
+	//unsigned char data = 0x00;
+
+	//delay_ms(100);
+
+	uint8_t byte_count = 6;
 
 	twi_start((NUNCHUCK_ADDRESS << 1) | TW_READ);
-	for (int i = 0; i < 6; i++)
+	for (uint8_t i = 0; i < byte_count; i++)
 	{
-		if (i == 0)
-		{
-			data = (twi_read() ^ 0x17) | 0x17;
-			//lcd_goto_xy(0, 1);
-			//printf("%d", data);
-		}
-		else
-		{
-			twi_read();
-		}
+		bool is_last_byte = (i == (byte_count - 1));
+		unsigned char data = is_last_byte ? twi_read_with_nak() : twi_read_with_ack();
+		bytes[i] = nunchuck_decode_byte(data);
+		//if (i == 0)
+		//{
+		//data = (twi_read() ^ 0x17) + 0x17;
+		////lcd_goto_xy(0, 1);
+		////printf("%d", data);
+		//}
+		//else
+		//{
+		//twi_read();
+		//}
 	}
+	//twi_read_nak();
 	twi_stop();
-	delay_ms(100);
+	//delay_ms(100);
 
-	return data;
+}
+
+unsigned char nunchuck_get_joystick_x()
+{
+	return bytes[0];
+	//nunchuck_check_is_initialized();
+	//nunchuck_conversion_command();
+
+	//unsigned char data = 0x00;
+
+	//delay_ms(100);
+
+	//twi_start((NUNCHUCK_ADDRESS << 1) | TW_READ);
+	//for (int i = 0; i < 5; i++)
+	//{
+		//if (i == 0)
+		//{
+			//data = (twi_read() ^ 0x17) + 0x17;
+			////lcd_goto_xy(0, 1);
+			////printf("%d", data);
+		//}
+		//else
+		//{
+			//twi_read();
+		//}
+	//}
+	////twi_read_nak();
+	//twi_stop();
+	//delay_ms(100);
+
+	//return data;
+}
+
+unsigned char nunchuck_get_joystick_y()
+{
+	return bytes[1];
+}
+
+uint16_t nunchuck_get_accelerometer_x()
+{
+	return (bytes[2] << 2) | ((bytes[5] | 0x0C) >> 2);
+}
+
+uint16_t nunchuck_get_accelerometer_y()
+{
+	return (bytes[3] << 2) | ((bytes[5] | 0x30) >> 4);
+}
+
+uint16_t nunchuck_get_accelerometer_z()
+{
+	return (bytes[4] << 2) | ((bytes[5] | 0xC0) >> 6);
+}
+
+bool nunchuck_get_button_c()
+{
+	return (bytes[5] & 0x02) == 0;
+}
+
+bool nunchuck_get_button_z()
+{
+	return (bytes[5] & 0x01) == 0;
 }

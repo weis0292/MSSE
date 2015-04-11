@@ -11,6 +11,7 @@
 void twi_start(unsigned char address);
 void twi_stop();
 void twi_write(unsigned char data);
-unsigned char twi_read();
+unsigned char twi_read_with_ack();
+unsigned char twi_read_with_nak();
 
 #endif /* TWO_WIRE_INTERFACE_H_ */
