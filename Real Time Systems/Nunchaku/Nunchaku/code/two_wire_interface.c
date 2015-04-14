@@ -2,7 +2,7 @@
  * two_wire_interface.c
  *
  * Created: 4/3/2015 10:28:20 AM
- * Author: Finga Gunz
+ * Author: Mike Weispfenning
  */
 
 #ifndef F_CPU
@@ -43,7 +43,7 @@ void twi_wait_for_twint_flag_set()
 	while (!(TWCR & (1 << TWINT)));
 }
 
-void twi_start(unsigned char address)
+void twi_start(uint8_t address)
 {
 	twi_verify_is_initialized();
 
@@ -79,7 +79,7 @@ void twi_stop()
 	while (TWCR & (1 << TWSTO)) { }
 }
 
-void twi_write(unsigned char data)
+void twi_write(uint8_t data)
 {
 	TWDR = data;
 	TWCR = (1 << TWINT) | (1 << TWEN);
@@ -91,12 +91,9 @@ void twi_write(unsigned char data)
 		lcd_goto_xy(0, 1);
 		printf("ERROR Write");
 	}
-
-	lcd_goto_xy(12, 1);
-	printf("%d", TW_STATUS & 0xF8);
 }
 
-unsigned char twi_read_with_ack()
+uint8_t twi_read_with_ack()
 {
 	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
 
@@ -105,7 +102,7 @@ unsigned char twi_read_with_ack()
 	return TWDR;
 }
 
-unsigned char twi_read_with_nak()
+uint8_t twi_read_with_nak()
 {
 	TWCR = (1 << TWINT) | (1 << TWEN);
 

@@ -2,7 +2,7 @@
  * nintendo_nunchuk.c
  *
  * Created: 4/3/2015 10:28:45 AM
- * Author: WeispfeM
+ * Author: Mike Weispfenning
  */
 
 #include <stdbool.h>
@@ -16,6 +16,7 @@
 #define NUNCHUCK_ADDRESS 0x52
 
 bool is_initialized = false;
+uint8_t nunchuck_data[6] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 void nunchuck_initialize()
 {
@@ -40,15 +41,6 @@ void nunchuck_conversion_command()
 	nunchuck_check_is_initialized();
 
 	twi_start((NUNCHUCK_ADDRESS << 1) | TW_WRITE);
-	//twi_start(0xA4);
-	//twi_write(0x40);
-	//delay_ms(100);
-	//if (i2c_write(0x00) > 0)
-	//{
-	//lcd_goto_xy(0, 1);
-	//printf("Error Write");
-	//}
-	//delay_ms(100);
 	twi_write(0x00);
 	twi_stop();
 
@@ -58,11 +50,9 @@ void nunchuck_conversion_command()
 	delay_ms(1);
 }
 
-unsigned char nunchuck_data[6];
-
-unsigned char nunchuck_decode_byte(unsigned char byte)
+uint8_t nunchuck_decode_byte(uint8_t data)
 {
-	return (byte ^ 0x17) + 0x17;
+	return (data ^ 0x17) + 0x17;
 }
 
 void nunchuck_refresh_data()
@@ -70,67 +60,24 @@ void nunchuck_refresh_data()
 	nunchuck_check_is_initialized();
 	nunchuck_conversion_command();
 
-	//unsigned char data = 0x00;
-
-	//delay_ms(100);
-
-	uint8_t byte_count = 6;
+	uint8_t data_count = 6;
 
 	twi_start((NUNCHUCK_ADDRESS << 1) | TW_READ);
-	for (uint8_t i = 0; i < byte_count; i++)
+	for (uint8_t i = 0; i < data_count; i++)
 	{
-		bool is_last_byte = (i == (byte_count - 1));
-		unsigned char data = is_last_byte ? twi_read_with_nak() : twi_read_with_ack();
+		bool is_last_byte = (i == (data_count - 1));
+		uint8_t data = is_last_byte ? twi_read_with_nak() : twi_read_with_ack();
 		nunchuck_data[i] = nunchuck_decode_byte(data);
-		//if (i == 0)
-		//{
-		//data = (twi_read() ^ 0x17) + 0x17;
-		////lcd_goto_xy(0, 1);
-		////printf("%d", data);
-		//}
-		//else
-		//{
-		//twi_read();
-		//}
 	}
-	//twi_read_nak();
 	twi_stop();
-	//delay_ms(100);
-
 }
 
-unsigned char nunchuck_get_joystick_x()
+uint8_t nunchuck_get_joystick_x()
 {
 	return nunchuck_data[0];
-	//nunchuck_check_is_initialized();
-	//nunchuck_conversion_command();
-
-	//unsigned char data = 0x00;
-
-	//delay_ms(100);
-
-	//twi_start((NUNCHUCK_ADDRESS << 1) | TW_READ);
-	//for (int i = 0; i < 5; i++)
-	//{
-		//if (i == 0)
-		//{
-			//data = (twi_read() ^ 0x17) + 0x17;
-			////lcd_goto_xy(0, 1);
-			////printf("%d", data);
-		//}
-		//else
-		//{
-			//twi_read();
-		//}
-	//}
-	////twi_read_nak();
-	//twi_stop();
-	//delay_ms(100);
-
-	//return data;
 }
 
-unsigned char nunchuck_get_joystick_y()
+uint8_t nunchuck_get_joystick_y()
 {
 	return nunchuck_data[1];
 }

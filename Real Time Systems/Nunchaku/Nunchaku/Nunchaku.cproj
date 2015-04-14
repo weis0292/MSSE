@@ -118,19 +118,25 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="code\i2cmaster.c">
+    <Compile Include="code\motion_control.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="code\nintendo_nunchuk.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="code\timers.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="code\two_wire_interface.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="headers\i2cmaster.h">
+    <Compile Include="headers\motion_control.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="headers\nintendo_nunchuk.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="headers\timers.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="headers\two_wire_interface.h">
